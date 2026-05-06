@@ -1,0 +1,2917 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>폐기물처분부담금 대상자 재활용 전환을 위한 에코 코디네이터</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #1a6b3c;
+  --green-light: #2d8f55;
+  --green-pale: #e8f5ee;
+  --green-mid: #c2e0cd;
+  --gold: #b8962e;
+  --gold-light: #f0d060;
+  --dark: #111a15;
+  --mid: #3a4a40;
+  --muted: #7a9080;
+  --bg: #f4f7f5;
+  --white: #ffffff;
+  --border: #d0e0d8;
+  --red: #c0392b;
+  --blue: #2563a8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--dark);
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.header {
+  background: linear-gradient(135deg, #0f3d22 0%, #1a6b3c 60%, #256b47 100%);
+  padding: 28px 24px 22px;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.header-inner { position: relative; max-width: 900px; margin: 0 auto; }
+.header-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+  color: #a8e6c0; font-size: 11px; font-weight: 500; letter-spacing: 1.5px;
+  padding: 4px 12px; border-radius: 20px; margin-bottom: 10px; text-transform: uppercase;
+}
+.header h1 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(20px, 4vw, 28px); font-weight: 700;
+  color: #fff; line-height: 1.3; margin-bottom: 6px;
+}
+.header h1 span { color: var(--gold-light); }
+.header p { color: rgba(255,255,255,0.7); font-size: 13px; line-height: 1.6; }
+.step-bar {
+  display: flex; gap: 0; margin-top: 20px; overflow: hidden; border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.step-pill {
+  flex: 1; text-align: center; padding: 8px 4px;
+  font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.45);
+  background: rgba(0,0,0,0.15); letter-spacing: 0.5px; cursor: pointer;
+  transition: all 0.25s; border-right: 1px solid rgba(255,255,255,0.1);
+  position: relative;
+}
+.step-pill:last-child { border-right: none; }
+.step-pill.active {
+  background: rgba(255,255,255,0.18); color: #fff;
+}
+.step-pill .snum {
+  display: block; font-size: 16px; font-weight: 700; color: var(--gold-light); margin-bottom: 2px;
+}
+.step-pill.active .snum { color: #fff; }
+
+/* ── MAIN ── */
+.main { max-width: 900px; margin: 0 auto; padding: 20px 16px 60px; }
+
+/* ── PANEL ── */
+.panel {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 14px; margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(26,107,60,0.06);
+  overflow: hidden;
+}
+.panel-head {
+  padding: 16px 20px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+  background: linear-gradient(90deg, #f8fcf9 0%, #fff 100%);
+}
+.panel-head .icon {
+  width: 34px; height: 34px; border-radius: 8px;
+  background: var(--green-pale); display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+}
+.panel-head h2 { font-size: 15px; font-weight: 700; color: var(--dark); }
+.panel-head p { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.panel-body { padding: 20px; }
+
+/* ── FORM ELEMENTS ── */
+.form-row { display: grid; gap: 14px; margin-bottom: 14px; }
+.form-row.col2 { grid-template-columns: 1fr 1fr; }
+.form-row.col3 { grid-template-columns: 1fr 1fr 1fr; }
+@media(max-width:600px) {
+  .form-row.col2, .form-row.col3 { grid-template-columns: 1fr; }
+}
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+.form-group label {
+  font-size: 12px; font-weight: 600; color: var(--mid); letter-spacing: 0.3px;
+}
+.form-group label span { color: var(--red); }
+.form-group input, .form-group select, .form-group textarea {
+  padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 8px;
+  font-size: 13px; font-family: 'Noto Sans KR', sans-serif; color: var(--dark);
+  background: #fff; outline: none; transition: border-color 0.2s;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color: var(--green); box-shadow: 0 0 0 3px rgba(26,107,60,0.08);
+}
+.form-group textarea { resize: vertical; min-height: 80px; }
+.hint { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+/* ── EXEMPTION CHECKLIST ── */
+.exemption-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+@media(max-width:600px){ .exemption-grid { grid-template-columns: 1fr; } }
+.exemption-item {
+  border: 1.5px solid var(--border); border-radius: 10px; padding: 12px;
+  cursor: pointer; transition: all 0.2s; background: #fafcfb;
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.exemption-item:hover { border-color: var(--green-light); background: var(--green-pale); }
+.exemption-item.checked { border-color: var(--green); background: var(--green-pale); }
+.exemption-item .check {
+  width: 20px; height: 20px; border-radius: 5px; border: 2px solid var(--border);
+  flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s; background: #fff; font-size: 11px; color: transparent;
+}
+.exemption-item.checked .check {
+  background: var(--green); border-color: var(--green); color: #fff;
+}
+.exemption-item .ex-title { font-size: 13px; font-weight: 600; color: var(--dark); }
+.exemption-item .ex-desc { font-size: 11px; color: var(--muted); margin-top: 3px; line-height: 1.5; }
+.exemption-item .ex-rate {
+  font-size: 11px; font-weight: 700; color: var(--green);
+  background: var(--green-pale); padding: 2px 6px; border-radius: 4px; margin-top: 4px; display: inline-block;
+}
+
+/* ── BUTTONS ── */
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 11px 20px; border-radius: 10px; font-size: 13px; font-weight: 600;
+  cursor: pointer; border: none; transition: all 0.2s; font-family: 'Noto Sans KR', sans-serif;
+}
+.btn-primary {
+  background: linear-gradient(135deg, #1a6b3c, #2d8f55); color: #fff;
+  box-shadow: 0 4px 14px rgba(26,107,60,0.25);
+}
+.btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.btn-primary:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+.btn-secondary {
+  background: #fff; color: var(--green); border: 1.5px solid var(--green);
+}
+.btn-secondary:hover { background: var(--green-pale); }
+.btn-ghost { background: transparent; color: var(--muted); border: 1.5px solid var(--border); }
+.btn-gold {
+  background: linear-gradient(135deg, #b8962e, #d4b040); color: #fff;
+  box-shadow: 0 4px 14px rgba(184,150,46,0.25);
+}
+.btn-gold:hover { filter: brightness(1.08); }
+
+/* ── GENERATING ── */
+.generating-box {
+  display: none; padding: 32px 20px; text-align: center;
+}
+.generating-box.show { display: block; }
+.spinner {
+  width: 44px; height: 44px; margin: 0 auto 16px;
+  border: 3px solid var(--green-pale);
+  border-top-color: var(--green);
+  border-radius: 50%; animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.gen-text { font-size: 14px; font-weight: 600; color: var(--green); margin-bottom: 6px; }
+.gen-sub { font-size: 12px; color: var(--muted); }
+.progress-bar-wrap {
+  height: 4px; background: var(--green-mid); border-radius: 4px; margin: 14px auto 0; max-width: 300px; overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%; background: linear-gradient(90deg, var(--green), var(--gold));
+  border-radius: 4px; width: 0%; transition: width 0.4s ease;
+}
+
+/* ── REPORT ── */
+#reportSection { display: none; }
+#reportSection.show { display: block; }
+.report-meta {
+  background: linear-gradient(135deg, #0f3d22, #1a6b3c);
+  padding: 24px; border-radius: 14px; color: #fff; margin-bottom: 16px;
+  position: relative; overflow: hidden;
+}
+.report-meta::after {
+  content: '♻'; position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+  font-size: 64px; opacity: 0.08;
+}
+.report-meta .rm-label {
+  font-size: 10px; letter-spacing: 2px; color: rgba(255,255,255,0.55); text-transform: uppercase; margin-bottom: 4px;
+}
+.report-meta h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+.report-meta .rm-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.rm-tag {
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+  padding: 3px 10px; border-radius: 20px; font-size: 11px; color: rgba(255,255,255,0.85);
+}
+.report-content {
+  background: #fff; border: 1px solid var(--border); border-radius: 14px;
+  padding: 20px 24px; margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(26,107,60,0.06);
+  line-height: 1.85; font-size: 14px; color: var(--dark);
+  
+}
+.report-content h2, .report-content h3 {
+  font-family: 'Noto Serif KR', serif;
+  color: var(--green); margin: 20px 0 8px;
+}
+.report-content h2 { font-size: 17px; border-bottom: 2px solid var(--green-pale); padding-bottom: 6px; }
+.report-content h3 { font-size: 15px; }
+.report-content ul, .report-content ol { padding-left: 20px; margin: 8px 0; }
+.report-content li { margin-bottom: 4px; }
+.report-content strong { color: var(--green); }
+.report-content .highlight {
+  background: var(--green-pale); border-left: 3px solid var(--green);
+  padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 12px 0;
+}
+.report-content table {
+  width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px;
+}
+.report-content th {
+  background: var(--green); color: #fff; padding: 8px 12px; text-align: left; font-weight: 600;
+}
+.report-content td {
+  padding: 8px 12px; border-bottom: 1px solid var(--border);
+}
+.report-content tr:nth-child(even) td { background: var(--green-pale); }
+
+/* ── ACTION BUTTONS ── */
+.action-strip {
+  display: flex; gap: 10px; flex-wrap: wrap; padding: 16px;
+  background: #fff; border: 1px solid var(--border); border-radius: 14px; margin-bottom: 16px;
+}
+.action-strip .alabel {
+  width: 100%; font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase;
+}
+
+/* ── SUMMARY CARDS ── */
+.summary-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.scard {
+  background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 16px;
+  box-shadow: 0 2px 8px rgba(26,107,60,0.05);
+}
+.scard .sc-label { font-size: 10px; color: var(--muted); font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 6px; }
+.scard .sc-val { font-size: 20px; font-weight: 800; color: var(--green); font-family: 'Noto Serif KR', serif; }
+.scard .sc-sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+  background: var(--dark); color: #fff; padding: 12px 24px; border-radius: 10px;
+  font-size: 13px; font-weight: 500; z-index: 999; transition: transform 0.3s;
+  white-space: nowrap; box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ── STEP DISPLAY ── */
+.step-section { display: none; }
+.step-section.active { display: block; }
+
+/* ── INFO BOX ── */
+.info-box {
+  background: #fffbea; border: 1px solid #f0d060; border-radius: 10px;
+  padding: 12px 16px; font-size: 12px; color: #6b5c00; line-height: 1.6; margin-bottom: 16px;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.info-box .ii { font-size: 16px; flex-shrink: 0; }
+
+/* divider */
+.divider { height: 1px; background: var(--border); margin: 18px 0; }
+
+/* ── WASTE CATEGORY UI ── */
+.waste-cat-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+}
+@media(min-width:600px){ .waste-cat-grid { grid-template-columns: repeat(4,1fr); } }
+.wcat-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  border: 2px solid var(--border); border-radius: 12px;
+  background: #fff; padding: 14px 8px; cursor: pointer;
+  transition: all 0.18s; text-align: center; position: relative;
+}
+.wcat-btn:hover { border-color: var(--green-light); background: var(--green-pale); }
+.wcat-btn.active {
+  border-color: var(--green); background: var(--green-pale);
+  box-shadow: 0 0 0 3px rgba(26,107,60,0.15);
+}
+.wcat-btn.active::after {
+  content: '✓'; position: absolute; top: 6px; right: 8px;
+  color: var(--green); font-weight: 700; font-size: 13px;
+}
+.wcat-icon { font-size: 26px; line-height: 1; }
+.wcat-name { font-size: 12px; font-weight: 700; color: var(--dark); }
+.wcat-sub  { font-size: 10px; color: var(--muted); line-height: 1.3; }
+
+.waste-item-grid {
+  display: flex; flex-wrap: wrap; gap: 7px; margin-top: 6px;
+}
+.witem-group { width: 100%; }
+.witem-group-title {
+  font-size: 11px; font-weight: 700; color: var(--green);
+  text-transform: uppercase; letter-spacing: 0.8px;
+  margin: 10px 0 6px; padding-left: 4px;
+  border-left: 3px solid var(--green); padding-left: 8px;
+}
+.witem-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 12px; border-radius: 20px; font-size: 12px;
+  border: 1.5px solid var(--border); background: #fff;
+  cursor: pointer; transition: all 0.15s; white-space: nowrap;
+}
+.witem-chip:hover { border-color: var(--green-light); background: var(--green-pale); }
+.witem-chip.selected {
+  border-color: var(--green); background: var(--green);
+  color: #fff; font-weight: 600;
+}
+.witem-chip .chip-code { font-size: 10px; opacity: 0.7; }
+
+.waste-summary {
+  margin-top: 10px; padding: 10px 14px; border-radius: 8px;
+  background: var(--green-pale); border: 1px solid var(--green-mid);
+  font-size: 12.5px; color: var(--mid); min-height: 36px;
+  display: none;
+}
+.waste-summary.show { display: block; }
+.waste-summary strong { color: var(--green); }
+
+/* ── PER-ITEM TREATMENT TABLE ── */
+.pit-table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+.pit-table thead th {
+  background: var(--green); color: #fff; padding: 8px 10px;
+  font-size: 11px; font-weight: 600; text-align: left; white-space: nowrap;
+}
+.pit-table tbody tr { border-bottom: 1px solid var(--border); }
+.pit-table tbody tr:last-child { border-bottom: none; }
+.pit-table tbody tr:nth-child(even) td { background: var(--green-pale); }
+.pit-table td { padding: 7px 8px; font-size: 12px; vertical-align: middle; }
+.pit-table td:first-child { font-weight: 600; color: var(--mid); max-width: 160px; }
+.pit-code { font-size: 10px; color: var(--muted); display: block; }
+.pit-treat-btns { display: flex; gap: 5px; flex-wrap: wrap; }
+.pit-tbtn {
+  padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600;
+  border: 1.5px solid var(--border); background: #fff; cursor: pointer;
+  transition: all 0.15s; white-space: nowrap;
+}
+.pit-tbtn:hover { border-color: var(--green-light); }
+.pit-tbtn.sel-소각 { background: #fff3e0; border-color: #e67e22; color: #c0550a; }
+.pit-tbtn.sel-매립 { background: #e8f5ee; border-color: var(--green); color: var(--green); }
+.pit-tbtn.sel-소각매립 { background: #eef2ff; border-color: #5a6fd6; color: #3a4fb0; }
+.pit-kg-input {
+  width: 100px; padding: 5px 8px; border: 1.5px solid var(--border);
+  border-radius: 6px; font-size: 12px; text-align: right;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.pit-kg-input:focus { border-color: var(--green); outline: none; }
+.pit-rate { font-size: 11px; color: var(--muted); }
+.pit-levy { font-size: 12px; font-weight: 700; color: var(--green); text-align: right; }
+.levy-total-bar {
+  margin-top: 12px; padding: 12px 16px; border-radius: 10px;
+  background: linear-gradient(135deg, #0f3d22, #1a6b3c);
+  color: #fff; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-size: 13px;
+}
+.levy-total-bar strong { font-size: 18px; font-weight: 700; color: #a8e6c0; }
+
+
+.rh2 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 15px; font-weight: 700; color: var(--green);
+  border-left: 4px solid var(--green); padding: 6px 0 6px 12px;
+  margin: 20px 0 8px; line-height: 1.4;
+  background: var(--green-pale); border-radius: 0 6px 6px 0;
+}
+.rh3 {
+  font-size: 13.5px; font-weight: 700; color: var(--mid);
+  margin: 14px 0 5px; padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+.md-p { margin: 4px 0 6px; line-height: 1.75; font-size: 13px; }
+.md-ul, .md-ol { padding-left: 18px; margin: 4px 0 6px; }
+.md-ul li, .md-ol li { margin-bottom: 3px; line-height: 1.65; font-size: 13px; }
+.md-bq {
+  background: var(--green-pale); border-left: 3px solid var(--green);
+  padding: 8px 12px; border-radius: 0 6px 6px 0; margin: 8px 0;
+  font-size: 12.5px; color: var(--mid); line-height: 1.65;
+}
+.md-hr { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+.md-gap { height: 4px; }
+
+/* ── TABLE ── */
+.md-table-wrap { overflow-x: auto; margin: 14px 0; border-radius: 10px; border: 1px solid var(--border); }
+.md-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.md-table th {
+  background: var(--green); color: #fff; padding: 10px 14px;
+  text-align: left; font-weight: 600; white-space: nowrap;
+}
+.md-table td { padding: 9px 14px; border-bottom: 1px solid var(--border); }
+.md-table tr:last-child td { border-bottom: none; }
+.md-table tr:nth-child(even) td { background: var(--green-pale); }
+.md-table td:first-child { font-weight: 600; color: var(--mid); }
+
+/* ── SCENARIO DEFINITION CARDS ── */
+.sc-def-title {
+  font-size: 11px; font-weight: 700; color: var(--mid);
+  margin-bottom: 6px; letter-spacing: 0.3px;
+}
+.sc-def-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px;
+}
+@media(max-width:700px){ .sc-def-grid { grid-template-columns: repeat(2, 1fr); } }
+.sc-def-card {
+  padding: 6px 8px; border-radius: 6px;
+  border-left-width: 3px; border-left-style: solid;
+}
+.sc-def-label {
+  font-size: 10px; font-weight: 700; margin-bottom: 2px;
+}
+.sc-def-body {
+  font-size: 9.5px; color: var(--mid); line-height: 1.4; margin-bottom: 3px;
+}
+.sc-def-meta {
+  display: flex; flex-direction: column; gap: 1px; font-size: 9px; color: var(--muted); font-weight: 500;
+}
+
+.chart-section {
+  background: #fff; border: 1px solid var(--border); border-radius: 14px;
+  padding: 20px; margin: 16px 0;
+  box-shadow: 0 2px 12px rgba(26,107,60,0.07);
+}
+.chart-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+.ctab {
+  padding: 7px 16px; border-radius: 8px; font-size: 12px; font-weight: 600;
+  border: 1.5px solid var(--border); background: #fff; color: var(--muted);
+  cursor: pointer; transition: all 0.2s; font-family: 'Noto Sans KR', sans-serif;
+}
+.ctab.active { background: var(--green); color: #fff; border-color: var(--green); }
+.chart-wrap { width: 100%; position: relative; }
+.chart-wrap canvas { display: block; }
+.chart-legend {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px;
+  padding-top: 12px; border-top: 1px solid var(--border);
+}
+.cleg-item { display: flex; align-items: center; gap: 6px; font-size: 11.5px; }
+.cleg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.cleg-label { color: var(--mid); }
+.cleg-val { color: var(--dark); font-weight: 700; margin-left: 4px; }
+
+@media print {
+  .chart-section { break-inside: avoid; }
+}
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-badge">🌿 ECO COORDINATOR</div>
+    <h1>폐기물처분부담금 대상자<br><span>재활용 전환을 위한 에코 코디네이터</span></h1>
+    <p>현장 방문 정보를 입력하면 AI가 맞춤형 감면 방안과 ESG 전략을 즉시 제공합니다.</p>
+    <div class="step-bar">
+      <div class="step-pill active" id="spill1" onclick="goStep(1)">
+        <span class="snum">1</span>정보 수집
+      </div>
+      <div class="step-pill" id="spill2" onclick="goStep(2)">
+        <span class="snum">2</span>감면 확인
+      </div>
+      <div class="step-pill" id="spill3" onclick="goStep(3)">
+        <span class="snum">3</span>AI 리포트
+      </div>
+      <div class="step-pill" id="spill4" onclick="goStep(4)">
+        <span class="snum">4</span>제공·공유
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ══ STEP 1 ══ -->
+<div class="step-section active" id="step1">
+  <div class="info-box">
+    <span class="ii">🔒</span>
+    <span>기업명 등 민감한 정보는 <strong>A사, B사</strong> 등으로 익명 처리하여 입력하세요. 실제 회사명은 리포트에 반영되지 않습니다.</span>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <div class="icon">🏭</div>
+      <div><h2>Step 1 · 기업 기본 현황</h2><p>현장 방문 시 담당자에게 확인한 정보를 입력합니다</p></div>
+    </div>
+    <div class="panel-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label>업체 코드명 <span>*</span></label>
+          <input id="companyCode" type="text" placeholder="예: A사, 가공식품업체B" maxlength="20">
+          <div class="hint">실제 업체명 대신 익명 코드를 사용하세요</div>
+        </div>
+          <input type="hidden" id="industry"><input type="hidden" id="industryCode">
+      </div>
+
+      <div class="form-row col3">
+        <div class="form-group">
+          <label>연간 매출액 (대략) <span>*</span></label>
+          <select id="revenue">
+            <option value="">-- 선택 --</option>
+            <option value="10억 미만">10억 미만</option>
+            <option value="10억~50억">10억~50억</option>
+            <option value="50억~100억">50억~100억</option>
+            <option value="100억~200억">100억~200억</option>
+            <option value="200억~400억">200억~400억</option>
+            <option value="400억~1000억">400억~1000억</option>
+            <option value="1000억 이상">1000억 이상</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>처분 연도 <span>*</span></label>
+          <select id="dispYear">
+            <option value="2024">2024년</option>
+            <option value="2025">2025년</option>
+            <option value="2026" selected>2026년</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>폐기물처리업자 여부</label>
+          <select id="isWasteBiz">
+            <option value="아니오">해당 없음</option>
+            <option value="예">폐기물처리업자</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <div class="icon">🗑️</div>
+      <div><h2>Step 1 · 폐기물 처분 현황</h2><p>올바로 실적보고서 기준으로 입력</p></div>
+    </div>
+    <div class="panel-body">
+
+      <!-- STEP A: 대분류 선택 -->
+      <div class="form-group">
+        <label>① 폐기물 대분류 선택 <span>*</span> <small style="color:var(--muted);font-weight:400">(복수 선택 가능)</small></label>
+        <div class="waste-cat-grid" id="wasteCatGrid">
+          <button type="button" class="wcat-btn" data-cat="사업장일반폐기물" onclick="toggleCat(this)">
+            <span class="wcat-icon">🏭</span><span class="wcat-name">사업장 일반폐기물</span>
+            <span class="wcat-sub">오니·합성수지·금속·목재 등</span>
+          </button>
+          <button type="button" class="wcat-btn" data-cat="건설폐기물" onclick="toggleCat(this)">
+            <span class="wcat-icon">🏗️</span><span class="wcat-name">건설폐기물</span>
+            <span class="wcat-sub">콘크리트·아스팔트·목재 등</span>
+          </button>
+          <button type="button" class="wcat-btn" data-cat="생활폐기물" onclick="toggleCat(this)">
+            <span class="wcat-icon">🏠</span><span class="wcat-name">생활폐기물</span>
+            <span class="wcat-sub">음식물·종이·유리·의류 등</span>
+          </button>
+        </div>
+        <div class="info-box" style="margin-top:10px;padding:10px 14px;">
+          <span class="ii">ℹ️</span>
+          <span><strong>지정폐기물은 처분부담금 전액 감면 대상</strong>이므로 입력 대상에서 제외됩니다. (순환경제사회 전환 촉진법 시행령 별표4 ⑤항)</span>
+        </div>
+      </div>
+
+      <!-- STEP B: 세부 품목 자동 표시 -->
+      <div class="form-group" id="wasteItemSection" style="display:none">
+        <label>② 세부 폐기물 품목 선택 <span>*</span> <small style="color:var(--muted);font-weight:400">(해당 항목 모두 선택)</small></label>
+        <div id="wasteItemList" class="waste-item-grid"></div>
+        <div id="wasteItemSummary" class="waste-summary"></div>
+      </div>
+
+      <!-- STEP C: 품목별 처리방식 + 처분량 -->
+      <div class="form-group" id="treatSection" style="display:none">
+        <label>③ 품목별 처리 방식 & 연간 처분량 <span>*</span>
+          <small style="color:var(--muted);font-weight:400"> — 각 품목마다 소각/매립 선택 후 처분량 입력</small>
+        </label>
+        <div id="perItemTable"></div>
+        <div class="levy-total-bar" id="levyTotalBar" style="display:none">
+          <span>📊 전체 예상 처분부담금 합계: </span>
+          <strong id="levyTotalNum">0원</strong>
+          <span id="levyTotalBreak" style="font-size:11px;color:var(--muted);margin-left:8px"></span>
+        </div>
+      </div>
+
+      <div class="form-row" id="kgSection" style="display:none">
+        <div class="form-group">
+          <label>④ 현재 재활용 현황 (있다면 기재)</label>
+          <input id="currentRecycle" type="text" placeholder="예: 폐지·고철 일부 재활용, 현재 재활용 없음">
+        </div>
+      </div>
+
+      <!-- hidden fields for compatibility -->
+      <input type="hidden" id="wasteType" value="">
+      <input type="hidden" id="wasteDetail" value="">
+      <input type="hidden" id="treatMethod" value="">
+      <input type="hidden" id="annualKg" value="0">
+
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="goStep(2)">
+      ✅ 다음 · 감면 조건 확인 →
+    </button>
+  </div>
+</div><!-- /step1 -->
+
+<!-- ══ STEP 2 ══ -->
+<div class="step-section" id="step2">
+  <div class="panel">
+    <div class="panel-head">
+      <div class="icon">💰</div>
+      <div><h2>Step 2 · 감면 조건 체크</h2><p>해당되는 감면 항목을 모두 선택하세요 (복수 선택 가능)</p></div>
+    </div>
+    <div class="panel-body">
+      <div class="info-box">
+        <span class="ii">📋</span>
+        <span>순환경제사회 전환 촉진법 시행령 별표4 기준입니다. 자주 신청되는 항목: <strong>②소각열에너지회수 / ④중소기업</strong> (지정폐기물은 신고 대상이나 부담금은 전액 감면됩니다)</span>
+      </div>
+      <div class="exemption-grid" id="exemptionGrid">
+        <!-- rendered by JS -->
+      </div>
+      <div class="divider"></div>
+      <div class="form-group">
+        <label>추가 현장 메모 (선택)</label>
+        <textarea id="extraNote" placeholder="예: 소각 보일러에서 열에너지 일부 회수 중, 향후 재활용 시설 도입 검토 중..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- 예상 부담금 미리보기 -->
+  <div class="panel" id="levyPreview">
+    <div class="panel-head">
+      <div class="icon">📊</div>
+      <div><h2>예상 처분부담금 미리보기</h2><p>입력 정보 기반 자동 계산 (참고용)</p></div>
+    </div>
+    <div class="panel-body">
+      <div class="summary-row" id="summaryCards"></div>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-ghost" onclick="goStep(1)">← 이전</button>
+    <button class="btn btn-primary" onclick="generateReport()">
+      🤖 AI 컨설팅 리포트 생성 →
+    </button>
+  </div>
+</div><!-- /step2 -->
+
+<!-- ══ STEP 3 ══ -->
+<div class="step-section" id="step3">
+  <!-- 생성 중 -->
+  <div class="generating-box" id="generatingBox">
+    <div class="spinner"></div>
+    <div class="gen-text" id="genText">AI가 맞춤형 컨설팅 리포트를 작성 중입니다...</div>
+    <div class="gen-sub" id="genSub">감면 조항 분석 중...</div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progBar"></div></div>
+  </div>
+
+  <!-- 리포트 출력 -->
+  <div id="reportSection">
+    <div class="report-meta" id="reportMeta"></div>
+    <div class="summary-row" id="reportCards"></div>
+    <div class="report-content" id="reportContent"></div>
+  </div>
+
+  <div class="btn-row" id="step3Btns" style="display:none;">
+    <button class="btn btn-ghost" onclick="goStep(2)">← 수정</button>
+    <button class="btn btn-primary" onclick="goStep(4)">📤 공유·저장 →</button>
+    <button class="btn btn-secondary" onclick="regenerateReport()">🔄 다시 생성</button>
+  </div>
+</div><!-- /step3 -->
+
+<!-- ══ STEP 4 ══ -->
+<div class="step-section" id="step4">
+  <div class="panel">
+    <div class="panel-head">
+      <div class="icon">📤</div>
+      <div><h2>Step 4 · 리포트 제공 & 공유</h2><p>현장에서 즉시 제공할 수 있는 방법을 선택하세요</p></div>
+    </div>
+    <div class="panel-body">
+      <div class="action-strip">
+        <div class="alabel">📄 저장 & 출력</div>
+        <button class="btn btn-primary" onclick="printMailReport()">📬 우편 발송용 리포트 출력</button>
+        <button class="btn btn-secondary" onclick="savePdf()">📥 PDF 저장</button>
+        <button class="btn btn-secondary" onclick="printReport()">🖨️ 인쇄</button>
+        <button class="btn btn-secondary" onclick="copyReport()">📋 텍스트 복사</button>
+      </div>
+      <div class="action-strip">
+        <div class="alabel">🔗 온라인 신고 바로가기</div>
+        <a class="btn btn-secondary" href="https://www.budamgum.or.kr" target="_blank" rel="noopener">🌐 처분부담금 시스템</a>
+        <a class="btn btn-ghost" href="https://www.re.or.kr/circul/listPubCirculSup.do" target="_blank" rel="noopener">♻️ 재활용 유통지원</a>
+        <a class="btn btn-ghost" href="https://www.re.or.kr/info/listTrtmPage.do" target="_blank" rel="noopener">🔍 처리업체 찾기</a>
+      </div>
+      <div class="divider"></div>
+      <div class="info-box">
+        <span class="ii">✅</span>
+        <span>신고 절차: <strong>①감면서류확인 → ②회원가입(budamgum.or.kr) → ③인증서등록 → ④정기신고</strong><br>
+        인증서: 사업자 범용·올바로 발급 = 자동승인 / 개인 인증서 = 관리자 승인(재직확인서 필요)</span>
+      </div>
+      <div class="btn-row" style="margin-top:4px;">
+        <button class="btn btn-ghost" onclick="goStep(1)">🔁 새 기업 컨설팅 시작</button>
+        <button class="btn btn-ghost" onclick="goStep(3)">← 리포트 보기</button>
+      </div>
+    </div>
+  </div>
+</div><!-- /step4 -->
+
+</div><!-- /main -->
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+
+const EXEMPTIONS = [
+  {
+    id:'recycle_self', num:'①',
+    title:'자가 매립 후 재활용',
+    desc:'자가매립 후 당해연도 12월31일까지 재활용 시 100% 감면',
+    rate:'최대 100%',
+    detail:'매립량 증빙, 재활용량 증빙, 위탁/자가처리계약서 등 필요'
+  },
+  {
+    id:'heat_recovery', num:'②',
+    title:'소각열 에너지 회수',
+    desc:'소각열 에너지 회수율에 따라 30~75% 감면 (2024년 처분분~)',
+    rate:'30~75%',
+    detail:'에너지회수효율 인증서(국립환경과학원 발급) 필요'
+  },
+  {
+    id:'waste_levy', num:'③',
+    title:'폐기물부담금 납부 후 처분',
+    desc:'이미 폐기물부담금 납부한 제품·재료·용기 소각/매립 시 100% 감면',
+    rate:'100%',
+    detail:'폐기물부담금 납부고지서·영수증 사본 필요'
+  },
+  {
+    id:'sme', num:'④',
+    title:'중소기업 감면',
+    desc:'연간 매출액 규모에 따라 50~100% 감면 (2024년 처분분~)',
+    rate:'50~100%',
+    detail:'중소기업확인서(중소벤처기업부), 재무제표 필요'
+  },
+  {
+    id:'island', num:'⑥',
+    title:'섬 지역 폐기물 처분',
+    desc:'도서 내 발생 폐기물을 해당 도서 내에서 처분 시 100% 감면',
+    rate:'100%',
+    detail:'폐기물 처분시설 설치승인서 또는 위탁처리계약서 필요'
+  },
+  {
+    id:'disaster', num:'⑦',
+    title:'재난폐기물 처분',
+    desc:'재난으로 발생한 폐기물 소각·매립 시 100% 감면',
+    rate:'100%',
+    detail:'관계행정기관 발급 피해 증빙서류 (화재증명원 등) 필요'
+  },
+  {
+    id:'landfill_rehab', num:'⑧',
+    title:'매립시설 정비폐기물 처분',
+    desc:'사용종료 매립시설 정비 과정 폐기물 처분 시 100% 감면',
+    rate:'100%',
+    detail:'지자체 매립시설 정비 결과보고 문서 필요'
+  },
+  {
+    id:'illegal', num:'⑨',
+    title:'불법폐기물 처분',
+    desc:'행정대집행에 따른 불법 투기·방치 폐기물 처분 시 100% 감면',
+    rate:'100%',
+    detail:'행정대집행 결과보고 문서 필요'
+  }
+];
+
+// 요율 (원/kg) × 산정지수
+// 처리방식별 코드→요율 매핑 (원/kg, 법령 기준)
+// 소각: 가연성 10원, 지정 10원 / 매립: 가연성 25원, 불연성 10원, 건설 30원, 지정 25원
+// ════════════════════════════════════════════
+// 처분부담금 요율 산출 (순환경제사회 전환 촉진법 시행령 별표5 기준)
+// ────────────────────────────────────────────
+// 매립: 생활폐기물 15원 / 사업장(불연성) 10원 / 사업장(가연성) 25원 / 건설 30원
+// 소각: 전체 10원 (불연성 소각도 가연성 소각 요율 적용 - 별표5 비고3)
+// ────────────────────────────────────────────
+// 별표5 비고2가목 불연성 폐기물 분류:
+//   무기성오니류, 열경화성수지(폐합성고분자 중), 광재류, 분진류,
+//   폐주물사·폐사, 폐내화물, 폐도자기조각, 소각재, 안정화·고형화처리물,
+//   금속성폐촉매, 광물류폐흡착제·폐흡수제, 폐석고·폐석회, 연소잔재물,
+//   폐석재류, 폐패각, 폐토사류, 폐콘크리트류, 폐아스팔트콘크리트,
+//   폐벽돌, 폐블록, 폐기와, 폐금속류, 폐유리류, 폐타일, 폐전주,
+//   폐소화기류, 폐전지류, 폐흑연가루
+// ════════════════════════════════════════════
+const INORGANIC_PREFIXES = [
+  '51-02',   // 무기성오니류
+  '51-04',   // 광재류 (고로슬래그, 제강슬래그 등)
+  '51-05',   // 분진류
+  '51-06',   // 폐주물사 및 폐사
+  '51-07',   // 폐내화물 및 폐도자기조각
+  '51-08',   // 소각재
+  '51-09',   // 안정화 또는 고형화·고화 처리물
+  '51-10-01',// 금속성 폐촉매 (비금속성 51-10-02는 가연성)
+  '51-11-01',// 폐흡착제 (광물류로 제조된 것 - 별표5 비고2가목)
+  '51-11-02',// 폐흡수제 (광물류로 제조된 것)
+  '51-12',   // 폐석고 및 폐석회
+  '51-13',   // 연소잔재물 (연탄재, 석탄재 등)
+  '51-14',   // 폐석재류
+  '51-17-04',// 폐패각
+  '51-21',   // 폐토사류
+  '51-22',   // 폐콘크리트류
+  '51-23',   // 폐아스팔트콘크리트
+  '51-24',   // 폐벽돌
+  '51-25',   // 폐블록
+  '51-26',   // 폐기와
+  '51-29',   // 폐금속류 (고철, 비철금속 등)
+  '51-30',   // 폐유리류
+  '51-31',   // 폐타일
+  '51-35',   // 폐전주
+  '51-40',   // 폐소화기류
+  '51-41',   // 폐전지류
+  '51-43',   // 폐흑연가루
+];
+
+function isInorganic(code) {
+  return INORGANIC_PREFIXES.some(p => code.startsWith(p));
+}
+
+function getRateByCodeAndMethod(code, method) {
+  const m = method.includes('소각') ? '소각' : '매립';
+
+  // 건설폐기물 (40-xx)
+  if (/^40/.test(code)) {
+    return m === '소각' ? 10 : 30;
+  }
+
+  // 사업장폐기물 (51-xx)
+  if (/^51/.test(code)) {
+    if (m === '소각') return 10; // 불연성 소각도 동일 요율(비고3)
+    // 매립: 불연성 10원, 가연성 25원
+    return isInorganic(code) ? 10 : 25;
+  }
+
+  // 생활폐기물 (91-xx)
+  if (/^91/.test(code)) {
+    return m === '소각' ? 10 : 15;
+  }
+
+  // 기본값
+  return m === '소각' ? 10 : 25;
+}
+
+// 요율 레이블 (UI 표시용)
+function getRateLabel(code, method) {
+  const rate = getRateByCodeAndMethod(code, method);
+  const m = method.includes('소각') ? '소각' : '매립';
+  if (/^51/.test(code) && m === '매립') {
+    const type = isInorganic(code) ? '불연성' : '가연성';
+    return `${rate}원/kg (${type}매립)`;
+  }
+  return `${rate}원/kg`;
+}
+
+
+const INDEX = { 2024: 1.168, 2025: 1.192, 2026: 1.210 };
+
+// 품목별 처리방식+처분량 상태 저장
+// perItemState[key] = { treat: '소각(위탁)'|'매립(위탁)'|'소각+매립', kg: number, kgSoil: number }
+const perItemState = {};
+
+function getItemKey(code, name) { return `${code}|${name}`; }
+
+function renderPerItemTable() {
+  const container = document.getElementById('perItemTable');
+  const year = parseInt(document.getElementById('dispYear').value) || 2026;
+  const idx  = INDEX[year] || 1.21;
+
+  if (selectedItems.size === 0) { container.innerHTML = ''; return; }
+
+  let html = `<div style="overflow-x:auto">
+  <table class="pit-table">
+    <thead>
+      <tr>
+        <th>폐기물 품목</th>
+        <th>처리 방식</th>
+        <th>연간 처분량 (kg)</th>
+        <th>적용 요율</th>
+        <th>예상 처분부담금</th>
+      </tr>
+    </thead>
+    <tbody>`;
+
+  selectedItems.forEach(key => {
+    const [code, name] = key.split('|');
+    const st = perItemState[key] || { treat: '', kg: '', kgLand: '' };
+
+    const treatOptions = [
+      { val:'소각(위탁)', label:'🔥 소각(위탁)', cls:'sel-소각' },
+      { val:'소각(자가)', label:'🔥 소각(자가)', cls:'sel-소각' },
+      { val:'매립(위탁)', label:'⛏️ 매립(위탁)', cls:'sel-매립' },
+      { val:'매립(자가)', label:'⛏️ 매립(자가)', cls:'sel-매립' },
+    ];
+
+    const btnHtml = treatOptions.map(opt => {
+      const active = st.treat === opt.val ? ` ${opt.cls}` : '';
+      return `<button type="button" class="pit-tbtn${active}"
+        onclick="setTreat('${key}','${opt.val}')">${opt.label}</button>`;
+    }).join('');
+
+    // 요율 계산
+    const rate = st.treat ? getRateByCodeAndMethod(code, st.treat) : null;
+    const rateLabel = st.treat ? getRateLabel(code, st.treat) : '—';
+    const levy = (st.treat && st.kg)
+      ? Math.round(parseFloat(st.kg) * rate * idx).toLocaleString() + '원'
+      : '—';
+
+    html += `<tr id="pit_row_${CSS.escape(key)}">
+      <td><span class="pit-code">${code}</span>${name}</td>
+      <td><div class="pit-treat-btns">${btnHtml}</div></td>
+      <td>
+        <input class="pit-kg-input" type="number" min="0" step="1"
+          placeholder="kg" value="${st.kg || ''}"
+          onchange="setKg('${key}', this.value)"
+          oninput="setKg('${key}', this.value)">
+      </td>
+      <td class="pit-rate" id="pit_rate_${CSS.escape(key)}">${rateLabel}</td>
+      <td class="pit-levy" id="pit_levy_${CSS.escape(key)}">${levy}</td>
+    </tr>`;
+  });
+
+  html += '</tbody></table></div>';
+  container.innerHTML = html;
+  updateLevyTotal();
+}
+
+function setTreat(key, val) {
+  if (!perItemState[key]) perItemState[key] = { treat: '', kg: '' };
+  perItemState[key].treat = val;
+  renderPerItemTable(); // re-render to update button styles
+}
+
+function setKg(key, val) {
+  if (!perItemState[key]) perItemState[key] = { treat: '', kg: '' };
+  perItemState[key].kg = parseFloat(val) || 0;
+  updateSingleRowLevy(key);
+  updateLevyTotal();
+}
+
+function updateSingleRowLevy(key) {
+  const year = parseInt(document.getElementById('dispYear').value) || 2026;
+  const idx  = INDEX[year] || 1.21;
+  const [code] = key.split('|');
+  const st = perItemState[key] || {};
+  const rateEl = document.getElementById('pit_rate_' + CSS.escape(key));
+  const levyEl = document.getElementById('pit_levy_' + CSS.escape(key));
+  if (!rateEl || !levyEl) return;
+  if (st.treat && st.kg) {
+    const rate = getRateByCodeAndMethod(code, st.treat);
+    rateEl.textContent = getRateLabel(code, st.treat);
+    levyEl.textContent = Math.round(st.kg * rate * idx).toLocaleString() + '원';
+  } else {
+    rateEl.textContent = st.treat ? getRateLabel(code, st.treat) : '—';
+    levyEl.textContent = '—';
+  }
+}
+
+function updateLevyTotal() {
+  const year = parseInt(document.getElementById('dispYear').value) || 2026;
+  const idx  = INDEX[year] || 1.21;
+  let total = 0;
+  let totalKg = 0;
+  const breakdown = [];
+
+  selectedItems.forEach(key => {
+    const [code, name] = key.split('|');
+    const st = perItemState[key] || {};
+    if (st.treat && st.kg) {
+      const rate = getRateByCodeAndMethod(code, st.treat);
+      const levy = Math.round(st.kg * rate * idx);
+      total += levy;
+      totalKg += parseFloat(st.kg);
+      breakdown.push(`${name}: ${levy.toLocaleString()}원`);
+    }
+  });
+
+  const bar = document.getElementById('levyTotalBar');
+  const num = document.getElementById('levyTotalNum');
+  const brk = document.getElementById('levyTotalBreak');
+
+  if (total > 0) {
+    bar.style.display = 'flex';
+    num.textContent = total.toLocaleString() + '원';
+    brk.textContent = '(' + breakdown.join(' | ') + ')';
+  } else {
+    bar.style.display = 'none';
+  }
+
+  // hidden fields 업데이트
+  updateHiddenFields();
+}
+
+
+
+// ════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════
+let selectedExemptions = new Set();
+let currentReport = '';
+
+function init() {
+  renderExemptions();
+}
+
+
+
+function renderExemptions() {
+  const grid = document.getElementById('exemptionGrid');
+  grid.innerHTML = EXEMPTIONS.map(e => `
+    <div class="exemption-item ${selectedExemptions.has(e.id) ? 'checked' : ''}"
+         onclick="toggleExemption('${e.id}')" id="ex_${e.id}">
+      <div class="check">${selectedExemptions.has(e.id) ? '✓' : ''}</div>
+      <div>
+        <div class="ex-title">${e.num} ${e.title}</div>
+        <div class="ex-desc">${e.desc}</div>
+        <span class="ex-rate">감면 ${e.rate}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleExemption(id) {
+  if (selectedExemptions.has(id)) selectedExemptions.delete(id);
+  else selectedExemptions.add(id);
+  renderExemptions();
+  updateLevyPreview();
+}
+
+// ════════════════════════════════════════════
+// STEP NAV
+// ════════════════════════════════════════════
+function goStep(n) {
+  if (n === 2) {
+    const required = ['companyCode','revenue','dispYear'];
+    for (const id of required) {
+      if (!document.getElementById(id).value) {
+        showToast('⚠️ 필수 항목을 모두 입력해 주세요');
+        document.getElementById(id).focus();
+        return;
+      }
+    }
+    if (selectedCats.size === 0) { showToast('⚠️ 폐기물 대분류를 선택해주세요'); return; }
+    if (selectedItems.size === 0) { showToast('⚠️ 세부 폐기물 품목을 1개 이상 선택해주세요'); return; }
+    const hasComplete = [...selectedItems].some(k => {
+      const st = perItemState[k] || {};
+      return st.treat && parseFloat(st.kg) > 0;
+    });
+    if (!hasComplete) { showToast('⚠️ 품목별 처리 방식과 처분량을 1개 이상 입력해주세요'); return; }
+    updateHiddenFields();
+    updateLevyPreview();
+  }
+  [1,2,3,4].forEach(i => {
+    document.getElementById(`step${i}`).classList.toggle('active', i === n);
+    document.getElementById(`spill${i}`).classList.toggle('active', i === n);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ════════════════════════════════════════════
+// LEVY PREVIEW (Step 2 summary cards)
+// ════════════════════════════════════════════
+function updateLevyPreview() {
+  const year = parseInt(document.getElementById('dispYear').value) || 2026;
+  const idx  = INDEX[year] || 1.21;
+  const rev  = document.getElementById('revenue').value;
+  let totalKg = 0, totalLevy = 0;
+  const methodSet = new Set();
+  selectedItems.forEach(key => {
+    const [code] = key.split('|');
+    const st = perItemState[key] || {};
+    const kg = parseFloat(st.kg) || 0;
+    if (!st.treat || !kg) return;
+    const rate = getRateByCodeAndMethod(code, st.treat);
+    totalKg += kg;
+    totalLevy += Math.round(kg * rate * idx);
+    methodSet.add(st.treat.includes('소각') ? '소각' : '매립');
+  });
+  const smeMap = {'10억 미만':100,'10억~50억':90,'50억~100억':80,'100억~200억':70,'200억~400억':60,'400억~1000억':50};
+  const smeRate = selectedExemptions.has('sme') ? (smeMap[rev] || 0) : 0;
+  const finalPct = Math.min(100, smeRate);
+  const discount = Math.round(totalLevy * finalPct / 100);
+  const payable  = Math.max(0, totalLevy - discount);
+  const methodLabel = [...methodSet].join('+') || '미선택';
+  const itemCount = [...selectedItems].filter(k=>(perItemState[k]||{}).kg).length;
+  document.getElementById('summaryCards').innerHTML = `
+    <div class="scard">
+      <div class="sc-label">총 처분량</div>
+      <div class="sc-val">${totalKg.toLocaleString()}</div>
+      <div class="sc-sub">kg · ${itemCount}개 품목 합산</div>
+    </div>
+    <div class="scard">
+      <div class="sc-label">예상 처분부담금</div>
+      <div class="sc-val">${totalLevy.toLocaleString()}</div>
+      <div class="sc-sub">원 · ${methodLabel} · 산정지수 ${idx}</div>
+    </div>
+    <div class="scard">
+      <div class="sc-label">예상 감면 금액</div>
+      <div class="sc-val" style="color:var(--gold)">${discount.toLocaleString()}</div>
+      <div class="sc-sub">원 ${finalPct > 0 ? `(약 ${finalPct}% 감면)` : '(감면 미적용)'}</div>
+    </div>
+    <div class="scard">
+      <div class="sc-label">예상 납부금액</div>
+      <div class="sc-val" style="color:var(--red)">${payable.toLocaleString()}</div>
+      <div class="sc-sub">원 (감면 적용 후)</div>
+    </div>`;
+}
+
+function collectData() {
+  const year = parseInt(document.getElementById('dispYear').value) || 2026;
+  const idx  = INDEX[year] || 1.21;
+  let totalKg = 0, totalLevy = 0;
+  const itemBreakdown = [];
+  selectedItems.forEach(key => {
+    const [code, name] = key.split('|');
+    const st = perItemState[key] || {};
+    const kg = parseFloat(st.kg) || 0;
+    if (!st.treat || !kg) return;
+    const rate = getRateByCodeAndMethod(code, st.treat);
+    const levy = Math.round(kg * rate * idx);
+    totalKg += kg; totalLevy += levy;
+    itemBreakdown.push({ code, name, treat: st.treat, kg, rate, levy });
+  });
+  const methodSet = [...new Set(itemBreakdown.map(i => i.treat.includes('소각') ? '소각' : '매립'))];
+  const selEx = EXEMPTIONS.filter(e => selectedExemptions.has(e.id));
+  return {
+    company:        document.getElementById('companyCode').value || 'A사',
+    industry:       document.getElementById('industryText')?.value || document.getElementById('industry')?.value || '',
+    revenue:        document.getElementById('revenue').value,
+    dispYear:       year,
+    wasteType:      [...selectedCats].join(', '),
+    wasteDetail:    document.getElementById('wasteDetail').value,
+    treatMethod:    document.getElementById('treatMethod').value,
+    annualKg:       totalKg,
+    currentRecycle: document.getElementById('currentRecycle').value,
+    exemptions:     selEx,
+    extraNote:      document.getElementById('extraNote').value,
+    levy: totalLevy, rate: 0, idx, method: methodSet.join('+') || '소각',
+    wasteItems:     [...selectedItems].map(k => { const p=k.split('|'); return {code:p[0],name:p[1]}; }),
+    wasteCats:      [...selectedCats],
+    itemBreakdown,
+  };
+}
+
+function buildPrompt(d) {
+  const exText = d.exemptions.length > 0
+    ? d.exemptions.map(e => `- ${e.num} ${e.title} (감면율: ${e.rate}) / 증빙: ${e.detail}`).join('\n')
+    : '없음';
+
+  const itemRows = (d.itemBreakdown || []).map(i => {
+    const typeLabel = /^51/.test(i.code)
+      ? (isInorganic(i.code) ? '[불연성]' : '[가연성]')
+      : (/^40/.test(i.code) ? '[건설]' : '[생활]');
+    return `  [${i.code}] ${i.name} ${typeLabel} | ${i.treat} | ${i.kg.toLocaleString()}kg | ${i.rate}원/kg | ${i.levy.toLocaleString()}원`;
+  }).join('\n') || '  없음';
+
+  const kg10 = Math.round(d.annualKg*0.1), levy10 = Math.round(d.levy*0.1);
+  const kg30 = Math.round(d.annualKg*0.3), levy30 = Math.round(d.levy*0.3);
+  const kg50 = Math.round(d.annualKg*0.5), levy50 = Math.round(d.levy*0.5);
+
+  return `당신은 폐기물처분부담금·순환경제 전문 컨설턴트입니다.
+아래 데이터를 바탕으로 현장 담당자가 바로 실행할 수 있는 컨설팅 리포트를 한국어로 작성하세요.
+
+═══════════ 현장 데이터 ═══════════
+업체: ${d.company} (${d.industry || ''}) / 매출: ${d.revenue} / ${d.dispYear}년
+폐기물 대분류: ${d.wasteType}
+
+▣ 품목별 현황 (${(d.itemBreakdown||[]).length}개)
+${itemRows}
+
+처분량: ${d.annualKg.toLocaleString()}kg / 처분부담금: ${d.levy.toLocaleString()}원 (지수 ${d.idx})
+감면 항목: ${exText}
+메모: ${d.extraNote || '없음'}
+═══════════════════════════════════
+
+【규칙】비전문가도 이해 가능한 표현 / 표는 파이프 표 / 수치 천단위 쉼표 / 구체적 업체명·전화번호 포함
+
+═══════ 리포트 구조 ═══════
+
+## 📋 현황 요약
+3문장으로 — 처분량/부담금/절감 가능성 핵심만.
+
+## 💰 감면 신청 방안
+선택된 감면 항목마다: 신청 방법(budamgum.or.kr) / 예상 감면액 / 필요 서류.
+감면 없으면 신청 가능한 항목 2개 추천.
+
+## ♻️ 폐기물별 재활용 전환 방법 및 업체
+
+각 품목마다 아래 형식:
+### [코드] 품목명
+- **지금**: 처리방식 / 연간 부담금
+- **전환 방법**: 구체적으로 어떻게 (1~2줄)
+- **절감**: 연간 ○○원
+- **연락처**: 업체명 ☎ 전화번호 (실제 연락 가능한 업체)
+- **팁**: 담당자가 이번 주 바로 할 수 있는 것
+
+전체 후 우선순위 표:
+| 순위 | 품목 | 방법 | 절감액 | 난이도 |
+|:---:|---|---|---:|:---:|
+
+
+
+## 🌱 ESG 환경 개선 효과 (30% 전환 기준)
+온실가스 감축량(tCO₂e), 탄소배출권 가치(원), 매립지 절감(m³) 수치를 표로 제시.
+각 수치 아래에 소글씨로 계산 근거 명시:
+- 온실가스: 전환량 × 0.26 kgCO₂/kg ÷ 1,000 (환경부 고시 폐기물 소각 배출계수)
+- 탄소배출권: × 9만원/t (K-ETS 기준가격)
+- 매립지: 전환량 ÷ 500 kg/m³ (폐기물 평균 겉보기밀도)
+
+## ✅ 추진 방향 안내
+
+아래 순서대로 검토해 보시면 도움이 됩니다:
+**① 감면 신청 여부 확인** — 아직 감면 미신청이라면 정기신고 수정으로 감면 항목 추가 가능. 중소기업 감면 해당 시 필요 서류: 중소기업확인서(☎ 국번없이 1357) + 재무제표.
+**② 재활용 업체 견적 문의** — re.or.kr(☎ 1800-8830)에서 업체 검색 후 쉬운 품목부터 여러 곳에 견적 요청. 수거 주기·단가·올바로시스템 연계 여부 비교.
+**③ 계약 시 확인사항** — 계약서에 처리방법·처리지 명시, 올바로시스템 연계 업체 여부 확인.
+
+## 📞 신고 안내
+budamgum.or.kr 신고 절차 4단계.
+처분부담금 문의: 광주전남제주환경본부 폐기물처분부담금 담당 ☎ 062-949-0305 (광주·전남·제주 관할)
+재활용업체 검색: 순환자원정보센터 ☎ 1800-8830 / www.re.or.kr
+중소기업확인서 발급: ☎ 국번없이 1357 (중소벤처기업부)
+신고·감면: wds.budamgum.or.kr`;
+}
+
+
+async function generateReport() {
+  const data = collectData();
+
+  if (!data.itemBreakdown || data.itemBreakdown.length === 0) {
+    showToast('⚠️ 처리 방식과 처분량을 입력한 품목이 없습니다');
+    return;
+  }
+
+  goStep(3);
+
+  const gBox      = document.getElementById('generatingBox');
+  const rSec      = document.getElementById('reportSection');
+  const step3Btns = document.getElementById('step3Btns');
+  const progBar   = document.getElementById('progBar');
+  const genSub    = document.getElementById('genSub');
+
+  gBox.classList.add('show');
+  rSec.classList.remove('show');
+  step3Btns.style.display = 'none';
+
+  let pct = 0;
+  const msgs = [[0,'현장 데이터 분석 중...'],[15,'폐기물 품목별 재활용 방법 검토 중...'],[35,'감면 조항 매핑 중...'],[55,'비용 절감 시나리오 산출 중...'],[75,'ESG 환경 효과 계산 중...'],[90,'리포트 최종 정리 중...']];
+  let msgIdx = 0;
+  const progInterval = setInterval(() => {
+    pct = Math.min(pct + 0.8, 94);
+    progBar.style.width = pct + '%';
+    if (msgIdx < msgs.length && pct >= msgs[msgIdx][0]) {
+      genSub.textContent = msgs[msgIdx][1]; msgIdx++;
+    }
+  }, 200);
+
+  let prompt;
+  try { prompt = buildPrompt(data); }
+  catch(e) {
+    clearInterval(progInterval);
+    gBox.classList.remove('show'); rSec.classList.add('show');
+    document.getElementById('reportContent').innerHTML =
+      `<div style="padding:20px;background:#fff3f3;border:2px solid #e74c3c;border-radius:10px">
+        <b>프롬프트 생성 오류:</b><pre style="font-size:11px;white-space:pre-wrap">${e.message}</pre></div>`;
+    step3Btns.style.display = 'flex';
+    return;
+  }
+
+  // ── API 호출 (claude.ai 아티팩트 환경) ──
+  window._pendingReportData = data;
+  window._reportGenActive   = true;
+
+  // 메시지 리스너: Claude 응답 수신
+  function onMessage(ev) {
+    if (!window._reportGenActive) return;
+    const d = ev.data;
+    // claude.ai가 응답을 postMessage로 보낼 때 처리
+    if (d && d.type === 'claude_response' && d.content) {
+      window._reportGenActive = false;
+      window.removeEventListener('message', onMessage);
+      clearTimeout(fallbackTimer);
+      clearInterval(progInterval);
+      progBar.style.width = '100%';
+      setTimeout(() => {
+        gBox.classList.remove('show');
+        showReport(data, d.content);
+        step3Btns.style.display = 'flex';
+        currentReport = d.content;
+      }, 400);
+    }
+  }
+  window.addEventListener('message', onMessage);
+
+  // 타임아웃 30초 후 fallback
+  const fallbackTimer = setTimeout(() => {
+    if (!window._reportGenActive) return;
+    window._reportGenActive = false;
+    window.removeEventListener('message', onMessage);
+    clearInterval(progInterval);
+    progBar.style.width = '100%';
+    setTimeout(() => {
+      gBox.classList.remove('show');
+      const fallback = generateFallbackReport(data);
+      showReport(data, fallback);
+      step3Btns.style.display = 'flex';
+      currentReport = fallback;
+    }, 300);
+  }, 30000);
+
+  // fetch 시도 (claude.ai 아티팩트 내에서 작동 가능한 경우)
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 6000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const result = await res.json();
+    if (!res.ok || result.error) throw new Error(JSON.stringify(result.error || result));
+    const text = (result.content || []).map(c => c.text || '').join('').trim();
+    if (!text) throw new Error('빈 응답');
+
+    // 성공
+    window._reportGenActive = false;
+    window.removeEventListener('message', onMessage);
+    clearTimeout(fallbackTimer);
+    clearInterval(progInterval);
+    progBar.style.width = '100%';
+    setTimeout(() => {
+      gBox.classList.remove('show');
+      showReport(data, text);
+      step3Btns.style.display = 'flex';
+      currentReport = text;
+    }, 400);
+
+  } catch(e) {
+    // fetch 실패 → fallback 즉시 실행
+    window._reportGenActive = false;
+    window.removeEventListener('message', onMessage);
+    clearTimeout(fallbackTimer);
+    clearInterval(progInterval);
+    progBar.style.width = '100%';
+    setTimeout(() => {
+      gBox.classList.remove('show');
+      const fallback = generateFallbackReport(data);
+      showReport(data, fallback);
+      step3Btns.style.display = 'flex';
+      currentReport = fallback;
+    }, 300);
+  }
+}
+
+
+
+// ── 리포트 렌더링 ──
+function markdownToHtml(md) {
+  var text = (md||'').replace(/\n{3,}/g,'\n\n');
+  var lines = text.split('\n');
+  var out='', i=0, prevHead=false;
+  function inl(s){
+    return (s||'').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/`(.+?)`/g,'<code>$1</code>');
+  }
+  function parseTable(blk){
+    var rows=blk.trim().split('\n').filter(function(r){return r.trim();});
+    var h='<div class="md-table-wrap"><table class="md-table">';
+    rows.forEach(function(row,ri){
+      if(/^\|[-:| ]+\|/.test(row))return;
+      var cells=row.split('|').slice(1,-1).map(function(c){return c.trim();});
+      if(ri===0)h+='<thead><tr>'+cells.map(function(c){return '<th>'+inl(c)+'</th>';}).join('')+'</tr></thead><tbody>';
+      else h+='<tr>'+cells.map(function(c){return '<td>'+inl(c)+'</td>';}).join('')+'</tr>';
+    });
+    return h+'</tbody></table></div>';
+  }
+  while(i<lines.length){
+    var line=lines[i], trim=line.trim();
+    if(/^<[a-zA-Z\/]/.test(trim)){out+=line+'\n';i++;prevHead=false;continue;}
+    if(/^## /.test(line)){out+='<h2 class="rh2">'+inl(line.slice(3))+'</h2>';i++;prevHead=true;continue;}
+    if(/^### /.test(line)){out+='<h3 class="rh3">'+inl(line.slice(4))+'</h3>';i++;prevHead=true;continue;}
+    if(/^\|/.test(line)){var blk='';while(i<lines.length&&/^\|/.test(lines[i])){blk+=lines[i]+'\n';i++;}out+=parseTable(blk);prevHead=false;continue;}
+    if(/^> /.test(line)){out+='<blockquote class="md-bq">';while(i<lines.length&&/^> /.test(lines[i])){out+=inl(lines[i].slice(2))+'<br>';i++;}out=out.replace(/<br>$/,'')+' </blockquote>';prevHead=false;continue;}
+    if(/^---+$/.test(trim)){out+='<hr class="md-hr">';i++;prevHead=false;continue;}
+    if(/^\d+\.\s/.test(line)){out+='<ol class="md-ol">';while(i<lines.length&&/^\d+\.\s/.test(lines[i])){out+='<li>'+inl(lines[i].replace(/^\d+\.\s/,''))+'</li>';i++;}out+='</ol>';prevHead=false;continue;}
+    if(/^[-*]\s/.test(line)){out+='<ul class="md-ul">';while(i<lines.length&&/^[-*]\s/.test(lines[i])){out+='<li>'+inl(lines[i].replace(/^[-*]\s/,''))+'</li>';i++;}out+='</ul>';prevHead=false;continue;}
+    if(trim===''){if(!prevHead)out+='<div style="height:4px"></div>';i++;continue;}
+    out+='<p class="md-p">'+inl(line)+'</p>';i++;prevHead=false;
+  }
+  return out;
+}
+
+
+
+// ════════════════════════════════════════════
+// 광주·전남 지역 재활용업체 DB (순환자원정보센터 기반)
+// 출처: 광주·전남 재활용·처분업체 리스트 (한국환경공단)
+// 코드별 최대 5개, 재활용 처리업체 우선 정렬
+// ════════════════════════════════════════════
+const LOCAL_COMPANY_DB = {"01-01":[{"name":"케이씨환경서비스(주)(소각)-월내","tel":"061-685-4149","addr":"전남 여수시 진달래길","method":"고온소각","region":"전남"},{"name":"(주)와이엔텍","tel":"061-690-6900","addr":"전남 여수시 여수산단로","method":"고온소각","region":"전남"}],"01-02":[{"name":"(주)와이엔텍","tel":"061-690-6900","addr":"전남 여수시 여수산단로","method":"고온소각","region":"전남"}],"01-03":[{"name":"(주)와이엔텍","tel":"061-690-6900","addr":"전남 여수시 여수산단로","method":"고온소각","region":"전남"},{"name":"케이씨환경서비스(주)(소각)-월내","tel":"061-685-4149","addr":"전남 여수시 진달래길","method":"고온소각","region":"전남"}],"02-01":[{"name":"(주)이맥스아이엔시 장성공장","tel":"061-395-2347","addr":"전남 장성군 황룡면","method":"기타","region":"전남"},{"name":"일진철강","tel":"061-334-1199","addr":"전남 나주시 삼영1길","method":"중간가공폐기물 제조","region":"전남"},{"name":"(주)에코리아","tel":"061-333-8804","addr":"전남 나주시 남평읍","method":"수리ㆍ수선 재사용","region":"전남"},{"name":"(주)와이엔텍","tel":"061-690-6900","addr":"전남 여수시 여수산단로","method":"중화","region":"전남"}],"02-02":[{"name":"(주)와이엔텍","tel":"061-690-6900","addr":"전남 여수시 여수산단로","method":"중화","region":"전남"}],"03-01":[{"name":"세정산업주식회사","tel":"061-371-2333","addr":"전남 화순군 이양면","method":"정제","region":"전남"}],"03-02":[{"name":"(주)심팩홀딩스 리스텍비즈 1공장","tel":"061-797-2011","addr":"전남 광양시 제철로","method":"원료 제조","region":"전남"},{"name":"(주)제철세라믹","tel":"061-791-1850","addr":"전남 광양시 태인동","method":"원료 제조","region":"전남"}],"03-03":[{"name":"승우산업개발(주)","tel":"061-797-1500","addr":"전남 광양시 금호동","method":"고형화","region":"전남"}],"03-07":[{"name":"케이씨환경서비스(주)[재활용전문]-월내","tel":"061-685-4149","addr":"전남 여수시 진달래길","method":"원형 재사용","region":"전남"},{"name":"(주)한국환경사업단","tel":"061-686-7066","addr":"전남 여수시 월내동","method":"중간가공폐기물 제조","region":"전남"}],"03-08":[{"name":"승우산업개발(주)","tel":"061-797-1500","addr":"전남 광양시 금호동","method":"고형화","region":"전남"},{"name":"케이씨환경서비스(주)(소각)-월내","tel":"061-685-4149","addr":"전남 여수시 진달래길","method":"고온소각","region":"전남"},{"name":"(주)와이엔텍","tel":"061-690-6900","addr":"전남 여수시 여수산단로","method":"고온소각","region":"전남"}],"04-01":[{"name":"케이씨환경서비스(주)(소각)-월내","tel":"061-685-4149","addr":"전남 여수시 진달래길","method":"고온소각","region":"전남"},{"name":"(주)와이엔텍","tel":"061-690-6900","addr":"전남 여수시 여수산단로","method":"고온소각","region":"전남"}],"04-02":[{"name":"이일산업(주)","tel":"061-808-2161","addr":"전남 여수시 삼동로","method":"수리ㆍ수선 재사용","region":"전남"},{"name":"재원산업(주)","tel":"061-690-9273","addr":"전남 여수시 낙포동","method":"연료ㆍ고형연료제품 제조","region":"전남"},{"name":"(주)대유홀딩스 순천지점","tel":"061-755-8600","addr":"전남 순천시 서면","method":"연료ㆍ고형연료제품 제조","region":"전남"},{"name":"(주)세일에너지","tel":"061-742-3252","addr":"전남 순천시 별량면","method":"연료ㆍ고형연료제품 제조","region":"전남"},{"name":"(주)클린랜드","tel":"061-383-5182","addr":"전남 담양군 무정면","method":"기타","region":"전남"}],"05-01":[{"name":"해동이앤티(주)","tel":"061-685-1525","addr":"전남 여수시 여수산단1로","method":"중간가공폐기물 제조","region":"전남"},{"name":"케이씨환경서비스(주)(소각)-월내","tel":"061-685-4149","addr":"전남 여수시 진달래길","method":"고온소각","region":"전남"},{"name":"(주)와이엔텍","tel":"061-690-6900","addr":"전남 여수시 여수산단로","method":"고온소각","region":"전남"},{"name":"케이씨환경서비스(주)[재활용전문]-월내","tel":"061-685-4149","addr":"전남 여수시 진달래길","method":"고온소각","region":"전남"}],"05-02":[{"name":"케이씨환경서비스(주)(소각)-월내","tel":"061-685-4149","addr":"전남 여수시 진달래길","method":"고온소각","region":"전남"},{"name":"(주)와이엔텍","tel":"061-690-6900","addr":"전남 여수시 여수산단로","method":"고온소각","region":"전남"}],"05-03":[{"name":"해동이앤티(주)","tel":"061-685-1525","addr":"전남 여수시 여수산단1로","method":"중간가공폐기물 제조","region":"전남"},{"name":"케이씨환경서비스(주)(소각)-월내","tel":"061-685-4149","addr":"전남 여수시 진달래길","method":"고온소각","region":"전남"},{"name":"(주)와이엔텍","tel":"061-690-6900","addr":"전남 여수시 여수산단로","method":"고온소각","region":"전남"}],"06-01":[{"name":"(주)대유홀딩스 순천지점","tel":"061-755-8600","addr":"전남 순천시 서면","method":"연료ㆍ고형연료제품 제조","region":"전남"},{"name":"이일산업(주)","tel":"061-808-2161","addr":"전남 여수시 삼동로","method":"직접 제품제조","region":"전남"},{"name":"재원산업(주)","tel":"061-690-9273","addr":"전남 여수시 낙포동","method":"정제","region":"전남"},{"name":"(주)와이엔텍","tel":"061-690-6900","addr":"전남 여수시 여수산단로","method":"정제","region":"전남"},{"name":"(주)세일에너지","tel":"061-742-3252","addr":"전남 순천시 별량면","method":"연료ㆍ고형연료제품 제조","region":"전남"}],"06-02":[{"name":"케이씨환경서비스(주)(소각)-월내","tel":"061-685-4149","addr":"전남 여수시 진달래길","method":"고온소각","region":"전남"},{"name":"(주)와이엔텍","tel":"061-690-6900","addr":"전남 여수시 여수산단로","method":"고온소각","region":"전남"}],"06-03":[{"name":"(주)대유홀딩스 순천지점","tel":"061-755-8600","addr":"전남 순천시 서면","method":"연료ㆍ고형연료제품 제조","region":"전남"},{"name":"재원산업(주)","tel":"061-690-9273","addr":"전남 여수시 낙포동","method":"연료ㆍ고형연료제품 제조","region":"전남"},{"name":"(주)세일에너지","tel":"061-742-3252","addr":"전남 순천시 별량면","method":"연료ㆍ고형연료제품 제조","region":"전남"},{"name":"(주)케미렉스","tel":"061-685-9961","addr":"전남 여수시 율촌면","method":"중간가공폐기물 제조","region":"전남"},{"name":"(주)삼우산업-여수","tel":"061-692-1601","addr":"전남 여수시 소라면","method":"중간가공폐기물 제조","region":"전남"}],"07-01":[{"name":"한맥테코산업(주)-여수","tel":"061-683-1815","addr":"전남 여수시 율촌면","method":"파쇄/분쇄","region":"전남"},{"name":"승우산업개발(주)","tel":"061-797-1500","addr":"전남 광양시 금호동","method":"고형화","region":"전남"},{"name":"인선이엔티(주)광양","tel":"061-791-0190","addr":"전남 광양시 제철로","method":"고형화","region":"전남"}],"07-02":[{"name":"인선이엔티(주)광양","tel":"061-791-0190","addr":"전남 광양시 제철로","method":"고형화","region":"전남"}],"07-03":[{"name":"한맥테코산업(주)-여수","tel":"061-683-1815","addr":"전남 여수시 율촌면","method":"파쇄/분쇄","region":"전남"},{"name":"승우산업개발(주)","tel":"061-797-1500","addr":"전남 광양시 금호동","method":"고형화","region":"전남"},{"name":"인선이엔티(주)광양","tel":"061-791-0190","addr":"전남 광양시 제철로","method":"고형화","region":"전남"}],"09-02":[{"name":"케이씨환경서비스(주)(소각)-월내","tel":"061-685-4149","addr":"전남 여수시 진달래길","method":"고온소각","region":"전남"},{"name":"(주)와이엔텍","tel":"061-690-6900","addr":"전남 여수시 여수산단로","method":"고온소각","region":"전남"}],"09-03":[{"name":"승우산업개발(주)","tel":"061-797-1500","addr":"전남 광양시 금호동","method":"고형화","region":"전남"},{"name":"케이씨환경서비스(주)(소각)-월내","tel":"061-685-4149","addr":"전남 여수시 진달래길","method":"고온소각","region":"전남"},{"name":"(주)와이엔텍","tel":"061-690-6900","addr":"전남 여수시 여수산단로","method":"고온소각","region":"전남"},{"name":"케이씨환경서비스(주)[재활용전문]-월내","tel":"061-685-4149","addr":"전남 여수시 진달래길","method":"고온소각","region":"전남"}],"40-01":[{"name":"(주)초당산업","tel":"062-944-0012","addr":"광주 광산구 금동학동길","method":"파쇄/분쇄","region":"광주"},{"name":"(주)케이환경","tel":"062-946-6400","addr":"광주 광산구 대산동","method":"파쇄/분쇄","region":"광주"},{"name":"(주)크린환경산업","tel":"062-943-4700","addr":"광주 광산구 송학동","method":"파쇄/분쇄","region":"광주"},{"name":"(주)송대에코","tel":"062-944-0940","addr":"광주 광산구 동곡로194번길","method":"파쇄/분쇄","region":"광주"},{"name":"등대환경산업(주)","tel":"061-471-8204","addr":"전남 영암군 도포면","method":"파쇄/분쇄","region":"전남"}],"40-02":[{"name":"(주)초당산업","tel":"062-944-0012","addr":"광주 광산구 금동학동길","method":"파쇄/분쇄","region":"광주"},{"name":"(주)송대에코","tel":"062-944-0940","addr":"광주 광산구 동곡로194번길","method":"파쇄/분쇄","region":"광주"},{"name":"(주)크린환경산업","tel":"062-943-4700","addr":"광주 광산구 송학동","method":"파쇄/분쇄","region":"광주"},{"name":"(주)조선우드","tel":"062-262-6777","addr":"광주 광산구 하남산단5번로","method":"연료ㆍ고형연료제품 제조","region":"광주"},{"name":"주식회사에코비트에너지명성","tel":"062-675-4200","addr":"광주 서구 매월1로","method":"기타","region":"광주"}],"40-03":[{"name":"(주)송대에코","tel":"062-944-0940","addr":"광주 광산구 동곡로194번길","method":"파쇄/분쇄","region":"광주"},{"name":"금성환경개발(주)","tel":"061-336-8827","addr":"전남 나주시 왕곡면","method":"파쇄/분쇄","region":"전남"},{"name":"백진환경(자)-운반,중간처리","tel":"061-742-6702","addr":"전남 순천시 대룡길","method":"파쇄/분쇄","region":"전남"},{"name":"(주)와이엔텍","tel":"061-690-6900","addr":"전남 여수시 여수산단로","method":"파쇄/분쇄","region":"전남"},{"name":"(주)초당산업","tel":"062-944-0012","addr":"광주 광산구 금동학동길","method":"탈수/건조","region":"광주"}],"40-04":[{"name":"(주)초당산업","tel":"062-944-0012","addr":"광주 광산구 금동학동길","method":"파쇄/분쇄","region":"광주"},{"name":"(주)송대에코","tel":"062-944-0940","addr":"광주 광산구 동곡로194번길","method":"파쇄/분쇄","region":"광주"},{"name":"초당환경(유)","tel":"062-944-1488","addr":"광주 광산구 덕림동","method":"파쇄/분쇄","region":"광주"},{"name":"(주)케이환경","tel":"062-946-6400","addr":"광주 광산구 대산동","method":"파쇄/분쇄","region":"광주"},{"name":"(주)크린환경산업","tel":"062-943-4700","addr":"광주 광산구 송학동","method":"파쇄/분쇄","region":"광주"}],"51-01":[{"name":"주식회사에코비트에너지명성","tel":"062-675-4200","addr":"광주 서구 매월1로","method":"기타","region":"광주"},{"name":"(주)성주환경","tel":"062-654-9551","addr":"광주 남구 양과동","method":"농업생산활동에 사용","region":"광주"},{"name":"(주)정흥케미칼","tel":"061-683-4217","addr":"전남 여수시 여수산단1로","method":"원료 제조","region":"전남"},{"name":"초록농원","tel":"010-****-****","addr":"전남 구례군 용방면","method":"중간가공폐기물 제조","region":"전남"},{"name":"능성영농조합법인","tel":"061-373-2442","addr":"전남 화순군 이양면","method":"농업생산활동에 사용","region":"전남"}],"51-02":[{"name":"주식회사 라온환경","tel":"061-533-7077","addr":"전남 해남군 마산면","method":"농업생산활동에 사용","region":"전남"},{"name":"영주산업 주식회사","tel":"061-686-7740","addr":"전남 여수시 율촌면","method":"직접 제품제조","region":"전남"},{"name":"(주)엠알씨2공장","tel":"061-791-1844","addr":"전남 광양시 제철로","method":"원료 제조","region":"전남"},{"name":"(주)효석","tel":"061-793-7300","addr":"전남 광양시 금호동","method":"성토재ㆍ복토재 등으로 사용","region":"전남"},{"name":"왕곡농축영농조합법인","tel":"061-336-1230","addr":"전남 나주시 왕곡면","method":"기타","region":"전남"}],"51-03":[{"name":"서일화성","tel":"062-952-3496","addr":"광주 광산구 장덕동","method":"원료 제조","region":"광주"},{"name":"(주)덕유환경개발","tel":"062-524-0400","addr":"광주 북구 무등로180번길","method":"중간가공폐기물 제조","region":"광주"},{"name":"(주)무등자원","tel":"062-531-1212","addr":"광주 북구 동배들길","method":"원료 제조","region":"광주"},{"name":"주식회사에코비트에너지명성","tel":"062-675-4200","addr":"광주 서구 매월1로","method":"파쇄/분쇄","region":"광주"},{"name":"대영자원(주)","tel":"062-514-8486","addr":"광주 북구 동림동","method":"원료 제조","region":"광주"}],"51-04":[{"name":"(주)효석","tel":"061-793-7300","addr":"전남 광양시 금호동","method":"성토재ㆍ복토재 등으로 사용","region":"전남"},{"name":"유네코(주)","tel":"061-721-7388","addr":"전남 순천시 해룡면","method":"기타","region":"전남"},{"name":"TI솔텍(주)","tel":"061-763-9669","addr":"전남 광양시 광양읍","method":"기타","region":"전남"},{"name":"부국산업(주)","tel":"061-798-9262","addr":"전남 광양시 금호동","method":"파쇄/분쇄","region":"전남"},{"name":"대교","tel":"031-985-3846","addr":"전남 곡성군 석곡면","method":"기타","region":"전남"}],"51-05":[{"name":"(주)엠알씨2공장","tel":"061-791-1844","addr":"전남 광양시 제철로","method":"파쇄/분쇄","region":"전남"},{"name":"(주)심팩홀딩스 리스텍비즈 1공장","tel":"061-797-2011","addr":"전남 광양시 제철로","method":"기타","region":"전남"},{"name":"(유)이앤알컨설팅","tel":"061-452-1286","addr":"전남 무안군 운남면","method":"성토재ㆍ복토재 등으로 사용","region":"전남"},{"name":"세정산업주식회사","tel":"061-371-2333","addr":"전남 화순군 이양면","method":"직접 제품제조","region":"전남"},{"name":"(주)신성산업","tel":"010-****-****","addr":"전남 곡성군 고달면","method":"중간가공폐기물 제조","region":"전남"}],"51-06":[{"name":"한국산업","tel":"061-692-5900","addr":"전남 여수시 여수산단1로","method":"직접 제품제조","region":"전남"},{"name":"(주)삼호로커스","tel":"061-464-2551","addr":"전남 영암군 삼호읍","method":"기타","region":"전남"},{"name":"(유)태창산업","tel":"061-453-8855","addr":"전남 무안군 몽탄면","method":"파쇄/분쇄","region":"전남"}],"51-07":[{"name":"조선내화 (주) 광양 내화원료공장","tel":"061-790-5375","addr":"전남 광양시 금호동","method":"원료 제조","region":"전남"},{"name":"(주)효석","tel":"061-793-7300","addr":"전남 광양시 금호동","method":"기타","region":"전남"},{"name":"(주)서해안산업환경","tel":"061-353-0900","addr":"전남 영광군 군서면","method":"파쇄/분쇄","region":"전남"},{"name":"동광전업(주)","tel":"063-652-7353","addr":"전남 강진군 강진읍","method":"파쇄/분쇄","region":"전남"},{"name":"(유)이앤알컨설팅","tel":"061-452-1286","addr":"전남 무안군 운남면","method":"성토재ㆍ복토재 등으로 사용","region":"전남"}],"51-08":[{"name":"(주)제철세라믹","tel":"061-791-1850","addr":"전남 광양시 태인동","method":"성토재ㆍ복토재 등으로 사용","region":"전남"},{"name":"주영에스티에스(주)","tel":"061-752-7700","addr":"전남 순천시 주암면","method":"기타","region":"전남"},{"name":"조은산업(주)-나주","tel":"061-334-1476","addr":"전남 나주시 봉황면","method":"기타","region":"전남"}],"51-10":[{"name":"(주)한국환경사업단","tel":"061-686-7066","addr":"전남 여수시 월내동","method":"원료 제조","region":"전남"},{"name":"korea s앤c","tel":"061-692-4831","addr":"전남 여수시 율촌면","method":"파쇄/분쇄","region":"전남"},{"name":"(주)리켐","tel":"061-381-5594","addr":"전남 담양군 무정면","method":"원료 제조","region":"전남"},{"name":"케이씨환경서비스(주)[재활용전문]-월내","tel":"061-685-4149","addr":"전남 여수시 진달래길","method":"원료 제조","region":"전남"},{"name":"(주)삼표시멘트 광양슬래그공장","tel":"061-797-1322","addr":"전남 광양시 태인동","method":"직접 제품제조","region":"전남"}],"51-11":[{"name":"(주)유니온카본","tel":"061-335-3944","addr":"전남 나주시 동수동","method":"원료 제조","region":"전남"},{"name":"케이씨환경서비스(주)(소각)-월내","tel":"061-685-4149","addr":"전남 여수시 진달래길","method":"고온소각","region":"전남"}],"51-12":[{"name":"(주)케이씨씨여천공장","tel":"061-680-7814","addr":"전남 여수시 낙포동","method":"기타","region":"전남"},{"name":"주영에스티에스(주)","tel":"061-752-7700","addr":"전남 순천시 주암면","method":"직접 제품제조","region":"전남"}],"51-13":[{"name":"영주산업 주식회사","tel":"061-686-7740","addr":"전남 여수시 율촌면","method":"직접 제품제조","region":"전남"},{"name":"대한시멘트 주식회사(사업장)","tel":"061-798-8561","addr":"전남 광양시 태인3길","method":"파쇄/분쇄","region":"전남"},{"name":"주영에스티에스(주)","tel":"061-752-7700","addr":"전남 순천시 주암면","method":"직접 제품제조","region":"전남"},{"name":"조은산업(주)-나주","tel":"061-334-1476","addr":"전남 나주시 봉황면","method":"직접 제품제조","region":"전남"},{"name":"(주)에스피에스엔에이 호남FA공장","tel":"061-724-2125","addr":"전남 순천시 해룡면","method":"원료 제조","region":"전남"}],"51-14":[{"name":"(주)대일환경산업","tel":"061-744-5353","addr":"전남 순천시 별량면","method":"파쇄/분쇄","region":"전남"},{"name":"(유)이앤알컨설팅","tel":"061-452-1286","addr":"전남 무안군 운남면","method":"성토재ㆍ복토재 등으로 사용","region":"전남"},{"name":"조선내화 (주) 광양 내화원료공장","tel":"061-790-5375","addr":"전남 광양시 금호동","method":"성토재ㆍ복토재 등으로 사용","region":"전남"}],"51-15":[{"name":"(주)하나이엔티","tel":"061-751-9806","addr":"전남 순천시 서면","method":"정제","region":"전남"},{"name":"한영타이어(주)","tel":"061-372-0245","addr":"전남 화순군 도곡면","method":"원형 재사용","region":"전남"},{"name":"동성타이어","tel":"061-383-3788","addr":"전남 담양군 월산면","method":"중간가공폐기물 제조","region":"전남"},{"name":"(주)부성리싸이클링(곡성)","tel":"061-363-8050","addr":"전남 곡성군 석곡면","method":"기타","region":"전남"},{"name":"(주)대호산업","tel":"062-953-8585","addr":"전남 함평군 월야면","method":"직접 제품제조","region":"전남"}],"51-16":[{"name":"(주)이맥솔루션","tel":"061-755-7295","addr":"전남 순천시 서면","method":"중간가공폐기물 제조","region":"전남"},{"name":"농업회사법인 강청(주)","tel":"062-675-4706","addr":"전남 담양군 담양읍","method":"기타","region":"전남"},{"name":"(주)청미래","tel":"061-381-6613","addr":"전남 담양군 봉산면","method":"원형 재사용","region":"전남"}],"51-17":[{"name":"(주)디엔코","tel":"062-571-1955","addr":"광주 북구 양산동","method":"기타","region":"광주"},{"name":"(주)성주환경","tel":"062-654-9551","addr":"광주 남구 양과동","method":"퇴비화","region":"광주"},{"name":"대광기업(광주)","tel":"062-945-4242","addr":"광주 광산구 평동영천안길","method":"중간가공폐기물 제조","region":"광주"},{"name":"옥천영농조합법인","tel":"061-333-2300","addr":"전남 나주시 왕곡면","method":"농업생산활동에 사용","region":"전남"},{"name":"(유)영진산업","tel":"061-331-8824","addr":"전남 나주시 봉황면","method":"농업생산활동에 사용","region":"전남"}],"51-18":[{"name":"KET환경개발","tel":"070-8826-7969","addr":"전남 여수시 화양면","method":"중간가공폐기물 제조","region":"전남"},{"name":"대경환경산업(주)-배출,처리","tel":"061-351-2357","addr":"전남 영광군 군서면","method":"원료 제조","region":"전남"},{"name":"에이치알씨(주)","tel":"061-393-0873","addr":"전남 장성군 삼계면","method":"원료 제조","region":"전남"},{"name":"(주)대운","tel":"061-393-9877","addr":"전남 장성군 삼계면","method":"중간가공폐기물 제조","region":"전남"},{"name":"순천시생활폐기물매립장","tel":"061-749-8994","addr":"전남 순천시 장천동","method":"압축","region":"전남"}],"51-20":[{"name":"(주)남부지엔씨","tel":"061-337-4504","addr":"전남 나주시 다도면","method":"파쇄/분쇄","region":"전남"},{"name":"전진환경(주)제2공장","tel":"061-741-7711","addr":"전남 순천시 녹색로","method":"파쇄/분쇄","region":"전남"},{"name":"삼보우드산업","tel":"061-464-5255","addr":"전남 영암군 삼호읍","method":"기타","region":"전남"},{"name":"엔이에스지와이(주)","tel":"061-795-7012","addr":"전남 광양시 성황동","method":"파쇄/분쇄","region":"전남"},{"name":"(주)가양산업","tel":"042-628-7151","addr":"전남 강진군 강진읍","method":"파쇄/분쇄","region":"전남"}],"51-21":[{"name":"호남산업(주)","tel":"061-755-7781","addr":"전남 순천시 서면","method":"파쇄/분쇄","region":"전남"},{"name":"백진환경(자)-운반,중간처리","tel":"061-742-6702","addr":"전남 순천시 대룡길","method":"파쇄/분쇄","region":"전남"},{"name":"(주)동양환경(무안)","tel":"061-453-9000","addr":"전남 무안군 청계면","method":"파쇄/분쇄","region":"전남"},{"name":"(주)다산환경","tel":"061-723-1424","addr":"전남 순천시 해룡면","method":"파쇄/분쇄","region":"전남"},{"name":"(주)금호환경(순천)","tel":"061-742-3540","addr":"전남 순천시 별량면","method":"파쇄/분쇄","region":"전남"}],"51-22":[{"name":"호남산업(주)","tel":"061-755-7781","addr":"전남 순천시 서면","method":"파쇄/분쇄","region":"전남"},{"name":"(주)다산환경","tel":"061-723-1424","addr":"전남 순천시 해룡면","method":"파쇄/분쇄","region":"전남"},{"name":"(유)삼려환경","tel":"061-686-6401","addr":"전남 여수시 소라면","method":"파쇄/분쇄","region":"전남"},{"name":"(주)한양자원개발","tel":"061-853-1738","addr":"전남 보성군 보성읍","method":"파쇄/분쇄","region":"전남"},{"name":"(주)동양환경(무안)","tel":"061-453-9000","addr":"전남 무안군 청계면","method":"파쇄/분쇄","region":"전남"}],"51-23":[{"name":"(유)장성이엔티","tel":"061-392-1882","addr":"전남 장성군 동화면","method":"파쇄/분쇄","region":"전남"},{"name":"(주)남부지엔씨","tel":"061-337-4504","addr":"전남 나주시 다도면","method":"파쇄/분쇄","region":"전남"},{"name":"호남산업(주)","tel":"061-755-7781","addr":"전남 순천시 서면","method":"파쇄/분쇄","region":"전남"},{"name":"백진환경(자)-운반,중간처리","tel":"061-742-6702","addr":"전남 순천시 대룡길","method":"파쇄/분쇄","region":"전남"},{"name":"(유)삼려환경","tel":"061-686-6401","addr":"전남 여수시 소라면","method":"파쇄/분쇄","region":"전남"}],"51-24":[{"name":"호남산업(주)","tel":"061-755-7781","addr":"전남 순천시 서면","method":"파쇄/분쇄","region":"전남"},{"name":"(유)삼려환경","tel":"061-686-6401","addr":"전남 여수시 소라면","method":"파쇄/분쇄","region":"전남"},{"name":"(주)다산환경","tel":"061-723-1424","addr":"전남 순천시 해룡면","method":"파쇄/분쇄","region":"전남"},{"name":"금성환경개발(주)","tel":"061-336-8827","addr":"전남 나주시 왕곡면","method":"파쇄/분쇄","region":"전남"},{"name":"(유)장성이엔티","tel":"061-392-1882","addr":"전남 장성군 동화면","method":"파쇄/분쇄","region":"전남"}],"51-25":[{"name":"(주)동양환경(무안)","tel":"061-453-9000","addr":"전남 무안군 청계면","method":"파쇄/분쇄","region":"전남"},{"name":"(주)서해안산업환경","tel":"061-353-0900","addr":"전남 영광군 군서면","method":"파쇄/분쇄","region":"전남"}],"51-27":[{"name":"남도에너지(주)","tel":"0613320797","addr":"전남 나주시 봉황면","method":"연료ㆍ고형연료제품 제조","region":"전남"},{"name":"(주)하나이엔티","tel":"061-751-9806","addr":"전남 순천시 서면","method":"연료ㆍ고형연료제품 제조","region":"전남"}],"51-28":[{"name":"해아래환경자원","tel":"061-763-8090","addr":"전남 광양시 봉강면","method":"원료 제조","region":"전남"},{"name":"전진환경(주)","tel":"061-741-7711","addr":"전남 순천시 명말1길","method":"파쇄/분쇄","region":"전남"},{"name":"(주)와이엔텍","tel":"061-690-6900","addr":"전남 여수시 여수산단로","method":"고온소각","region":"전남"}],"51-29":[{"name":"(유)태창산업","tel":"061-453-8855","addr":"전남 무안군 몽탄면","method":"기타","region":"전남"},{"name":"(주)신진기업","tel":"061-792-5095","addr":"전남 광양시 금호동","method":"원료 제조","region":"전남"},{"name":"(주)케이에스티","tel":"061-762-7721","addr":"전남 광양시 광양읍","method":"원료 제조","region":"전남"},{"name":"(주)삼호로커스","tel":"061-464-2551","addr":"전남 영암군 삼호읍","method":"원료 제조","region":"전남"},{"name":"부국산업(주)","tel":"061-798-9262","addr":"전남 광양시 금호동","method":"원료 제조","region":"전남"}],"51-30":[{"name":"다한산업","tel":"061-323-8571","addr":"전남 함평군 해보면","method":"파쇄/분쇄","region":"전남"},{"name":"순천시생활폐기물매립장","tel":"061-749-8994","addr":"전남 순천시 장천동","method":"원형 재사용","region":"전남"},{"name":"주양제이앤와이(주)","tel":"031970-8597","addr":"전남 해남군 삼산면","method":"원형 재사용","region":"전남"},{"name":"(주)은혜","tel":"061-762-8252","addr":"전남 광양시 광양읍","method":"중간가공폐기물 제조","region":"전남"}],"51-31":[{"name":"금성환경개발(주)","tel":"061-336-8827","addr":"전남 나주시 왕곡면","method":"파쇄/분쇄","region":"전남"}],"51-32":[{"name":"(주)티앤에스이노켐","tel":"062-943-1904","addr":"전남 함평군 월야면","method":"중간가공폐기물 제조","region":"전남"}],"51-33":[{"name":"전진환경(주)","tel":"061-741-7711","addr":"전남 순천시 명말1길","method":"중간가공폐기물 제조","region":"전남"}],"51-35":[{"name":"동광전업(주)","tel":"063-652-7353","addr":"전남 강진군 강진읍","method":"직접 제품제조","region":"전남"},{"name":"(주)한양자원개발","tel":"061-853-1738","addr":"전남 보성군 보성읍","method":"파쇄/분쇄","region":"전남"}],"51-38":[{"name":"(주)하나이엔티","tel":"061-751-9806","addr":"전남 순천시 서면","method":"농업생산활동에 사용","region":"전남"},{"name":"만성축산","tel":"061-383-6444","addr":"전남 담양군 담양읍","method":"사료화","region":"전남"},{"name":"농업회사법인(주)디앤제이테크","tel":"061-852-0363","addr":"전남 보성군 조성면","method":"농업생산활동에 사용","region":"전남"},{"name":"그린에코바이오(주)","tel":"061-374-7900","addr":"전남 화순군 화순읍","method":"농업생산활동에 사용","region":"전남"},{"name":"광민영농조합법인","tel":"061-534-4256","addr":"전남 해남군 산이면","method":"퇴비화","region":"전남"}],"51-40":[{"name":"(주)삼우산업-여수","tel":"061-692-1601","addr":"전남 여수시 소라면","method":"직접 제품제조","region":"전남"}],"51-41":[{"name":"(주)어스앤배터리","tel":"061-803-2346","addr":"전남 영광군 대마면","method":"수리ㆍ수선 재사용","region":"전남"}],"51-99":[{"name":"(유)이앤알컨설팅","tel":"061-452-1286","addr":"전남 무안군 운남면","method":"성토재ㆍ복토재 등으로 사용","region":"전남"},{"name":"엔이에스지와이(주)","tel":"061-795-7012","addr":"전남 광양시 성황동","method":"중간가공폐기물 제조","region":"전남"},{"name":"(유)금경하이테크","tel":"061-381-6017","addr":"전남 담양군 무정면","method":"기타","region":"전남"},{"name":"왕곡농축영농조합법인","tel":"061-336-1230","addr":"전남 나주시 왕곡면","method":"기타","region":"전남"},{"name":"푸른보성영농조합법인","tel":"061-852-6666","addr":"전남 보성군 보성읍","method":"퇴비화","region":"전남"}]};
+
+function getLocalCompaniesHtml(code) {
+  // 2단계 코드로 정규화 (51-30-01 → 51-30)
+  var base = code.split('-').slice(0,2).join('-');
+  var found = LOCAL_COMPANY_DB[base] || LOCAL_COMPANY_DB[code] || [];
+  if (!found.length) return '';
+
+  var rows = found.map(function(c) {
+    return '<tr>' +
+      '<td style="padding:6px 10px;border-bottom:1px solid #e0ede8;font-size:11.5px;font-weight:600">' + c.name + '</td>' +
+      '<td style="padding:6px 10px;border-bottom:1px solid #e0ede8;font-size:11.5px;color:#1a6b3c;font-weight:700;white-space:nowrap">☎ ' + c.tel + '</td>' +
+      '<td style="padding:6px 10px;border-bottom:1px solid #e0ede8;font-size:11px;color:#5a6a5a">' + c.addr + '</td>' +
+      '<td style="padding:6px 10px;border-bottom:1px solid #e0ede8;font-size:11px;color:#7a9080">' + c.method + '</td>' +
+      '</tr>';
+  }).join('');
+
+  return '<div style="margin-bottom:8px;background:#f0f7f3;border:1px solid #c2e0cd;border-radius:8px;padding:10px 14px">' +
+    '<div style="font-size:11.5px;font-weight:700;color:#1a6b3c;margin-bottom:7px">📍 광주·전남 지역 재활용업체</div>' +
+    '<div style="overflow-x:auto;border-radius:6px;border:1px solid #c8ddd4">' +
+      '<table style="width:100%;border-collapse:collapse">' +
+        '<thead><tr style="background:#1a6b3c;color:#fff">' +
+          '<th style="padding:6px 10px;text-align:left;font-size:11px">업체명</th>' +
+          '<th style="padding:6px 10px;text-align:left;font-size:11px">전화번호</th>' +
+          '<th style="padding:6px 10px;text-align:left;font-size:11px">소재지</th>' +
+          '<th style="padding:6px 10px;text-align:left;font-size:11px">처리방법</th>' +
+        '</tr></thead>' +
+        '<tbody>' + rows + '</tbody>' +
+      '</table>' +
+    '</div>' +
+    '<div style="margin-top:4px;font-size:10px;color:#7a9080">※ 출처: 순환자원정보센터 · 다른 지역 업체는 아래 버튼에서 검색하세요</div>' +
+  '</div>';
+}
+
+
+const RECYCLE_DB = {
+  '51-01': {
+    method: '퇴비화(R-7) 또는 바이오가스화(R-1)',
+    law: '폐기물관리법 시행규칙 별표4의2 제7호(퇴비화), 제1호(에너지회수)',
+    detail: [
+      '[R-7 퇴비화] 유기성오니(강열감량 25% 이상): 수분조절재(톱밥·왕겨 등) 투입 → 호기성 부숙(60일 이상, 60℃ 이상) → 비료관리법상 부숙유기질비료 기준 충족 시 농가 공급',
+      '[R-1 에너지회수] 바이오가스화: 혐기성 소화조 투입(체류시간 20~30일) → 메탄(CH₄) 50~70% 함유 바이오가스 생산 → 발전·열공급 또는 CNG 전환',
+      '[R-3 원료재활용] 무기성오니(강열감량 25% 미만): 탈수(함수율 85% 이하) 후 시멘트 원료 또는 성토재·복토재로 재활용',
+    ],
+    process: '성상분석(강열감량·함수율) → 유형 결정 → 퇴비화/바이오가스화/시멘트원료 납품',
+    diff: '보통', saving: 25
+  },
+  '51-02': {
+    method: '시멘트 원료(R-3) 또는 성토재(R-5)',
+    law: '폐기물관리법 시행규칙 별표4의2 제3호(원료재활용), 제5호(건설재료)',
+    detail: [
+      '[R-3 원료재활용] 탈수(함수율 85% 이하) → 시멘트 원료 납품: 쌍용C&E·한일시멘트 등 시멘트사가 킬른(Kiln) 보조원료로 사용',
+      '[R-5 건설재료] 건설오니: 탈수·건조(함수율 30% 이하) → 성토재·복토재·도로 하층노반재 활용(토양오염 기준 충족 확인 필요)',
+      '[R-7 토지개량] 유기성분 함유 시: 중금속 기준 충족 후 농지·녹지 개량재 활용 가능',
+    ],
+    process: '탈수 → 함수율 측정 → 용도별 기준 충족 확인 → 납품',
+    diff: '보통', saving: 10
+  },
+  '51-03': {
+    method: 'SRF 제조(R-1) 또는 재생수지(R-3)',
+    law: '폐기물관리법 시행규칙 별표4의2 제1호(에너지회수), 제3호(원료재활용) / 자원의 절약과 재활용 촉진에 관한 법률 제25조의4(고형연료제품 품질기준)',
+    detail: [
+      '[R-3 물질재활용] PE·PP 등 열가소성 수지: 파쇄(30mm 이하) → 세척·건조 → 펠릿화 → 재생수지 원료. 발열량 기준 미충족 시 물질재활용 우선 적용',
+      '[R-1 에너지회수] SRF(고형연료제품) 제조: 발열량 3,500 kcal/kg 이상, 수분 25% 이하, 염소 0.5% 이하 충족 시 시멘트·발전소 보조연료',
+      '[주의] PVC(폴리염화비닐): 염소 함유로 SRF 기준 초과 → 반드시 별도 선별 후 PVC 전용 재생업체 위탁',
+      '[R-1 열분해] 혼합 폐플라스틱: 무산소 열분해(400~600℃) → 재생유·탄소 생산 (환경부 열분해유 품질기준 고시 적용)',
+    ],
+    process: 'PVC 선별 제거 → 파쇄 → 품질분석(발열량·수분·염소) → SRF 제조 또는 재생수지 납품',
+    diff: '보통', saving: 25
+  },
+  '51-04': {
+    method: '시멘트 혼합재(R-3) 또는 도로 노반재(R-5)',
+    law: '폐기물관리법 시행규칙 별표4의2 제3호(원료재활용), 제5호(건설재료) / KS F 4009(고로슬래그), KS F 4401(제강슬래그)',
+    detail: [
+      '[R-3 원료재활용] 고로슬래그: 분쇄(비표면적 4,000cm²/g 이상) → 시멘트 혼합재(KS L 5405 플라이애시·고로슬래그 시멘트) 원료. 시멘트사 무료 수거 협약 가능',
+      '[R-5 건설재료] 제강슬래그: 에이징(3개월 이상, 팽창성 해소) → 도로 기층재·보조기층재(KS F 4401), 항만 매립재 활용',
+      '[R-3 원료재활용] 비철광재(아연슬래그 등): 성분분석 후 용도 결정. 아연 함유 시 재련 원료로 활용',
+    ],
+    process: '성분분석 → 등급 분류(고로/제강/비철) → 에이징(제강슬래그) → 시멘트사 납품 또는 건설현장 공급',
+    diff: '쉬움', saving: 10
+  },
+  '51-05': {
+    method: '시멘트 원료(R-3) 또는 중금속 회수(R-3)',
+    law: '폐기물관리법 시행규칙 별표4의2 제3호(원료재활용) / 중금속 함량 기준 고시(환경부)',
+    detail: [
+      '[R-3 원료재활용] 중금속 기준 충족 분진: 시멘트 킬른 원료 납품 가능. Zn≤2,000mg/kg, Pb≤500mg/kg 등 기준 확인 필수',
+      '[R-3 원료재활용] 아연 함유 분진(제강먼지, EAF dust): 아연 회수(습식·건식 제련) → 산화아연(ZnO) 생산. 고려아연 등 재련소 직납',
+      '[처리 전 필수] 중금속 함량 성분분석(공인 시험기관) → 기준 초과 시 지정폐기물 전환 → 전문처리업체 위탁',
+    ],
+    process: '중금속 성분분석 → 기준 충족 여부 → 시멘트 원료 or 재련소 직납',
+    diff: '어려움', saving: 10
+  },
+  '51-06': {
+    method: '열적 재생(R-3) 또는 복토재(R-5)',
+    law: '폐기물관리법 시행규칙 별표4의2 제3호(원료재활용), 제5호(건설재료)',
+    detail: [
+      '[R-3 원료재활용] 열적 재생법: 800~900℃ 가열 → 점토 분해·바인더 연소 → 재생사 생산 → 주물사로 재사용. 주물사 자가 재생 시 폐기물 해당 안됨',
+      '[R-5 건설재료] 재생 불가 폐주물사: 파쇄(40mm 이하) → 도로 하층노반재·복토재 활용',
+    ],
+    process: '오염도 분석 → 열적 재생 가능 여부 판단 → 재생 또는 건설재료 납품',
+    diff: '보통', saving: 10
+  },
+  '51-07': {
+    method: '내화재 원료(R-3) 또는 시멘트 원료(R-3)',
+    law: '폐기물관리법 시행규칙 별표4의2 제3호(원료재활용)',
+    detail: [
+      '[R-3 원료재활용] 파쇄(25mm 이하) → 성분분석(Al₂O₃·SiO₂·MgO 등) → 내화물 제조 원료 재활용',
+      '[R-3 원료재활용] 시멘트 킬른 원료: Al₂O₃·SiO₂ 성분 활용. 시멘트사 수매 협의 가능',
+    ],
+    process: '파쇄 → 성분분석 → 내화재 원료 또는 시멘트 원료 납품',
+    diff: '보통', saving: 10
+  },
+  '51-08': {
+    method: '성토재(R-5) 또는 시멘트 원료(R-3)',
+    law: '폐기물관리법 시행규칙 별표4의2 제3호(원료재활용), 제5호(건설재료) / 소각재 재활용지침(환경부 고시)',
+    detail: [
+      '[R-5 건설재료] 바닥재(Bottom Ash): 안정화 처리(고화제 투입, 양생 28일) → 용출시험 기준 충족 후 도로 하층노반재·성토재',
+      '[R-3 원료재활용] 비산재(Fly Ash): 중금속 용출기준(폐기물관리법 별표1) 충족 시 시멘트 킬른 원료. 미충족 시 고온용융(1,200℃ 이상) 처리 후 재활용',
+      '[주의] 비산재는 1차 유해성 검사 필수. 기준 초과 시 지정폐기물로 분류되어 별도 처리',
+    ],
+    process: '유해성 분석 → 안정화 처리 → 용출시험 기준 충족 확인 → 성토재 납품',
+    diff: '보통', saving: 10
+  },
+  '51-11': {
+    method: '재활성화 재사용(R-3) 또는 보조연료(R-1)',
+    law: '폐기물관리법 시행규칙 별표4의2 제3호(원료재활용), 제1호(에너지회수)',
+    detail: [
+      '[R-3 원료재활용] 재활성화: 600~900℃ 고온 처리(Steam 재활성화) → 흡착능력 회복 → 재사용. 오염물질이 유기물인 경우 가능',
+      '[R-1 에너지회수] 고오염 폐활성탄: 발열량 기준 충족(3,000 kcal/kg 이상) 시 SRF 보조연료로 활용',
+      '[주의] 중금속 흡착 폐활성탄: 지정폐기물 해당 여부 먼저 확인. 해당 시 전문처리업체 위탁 필수',
+    ],
+    process: '오염물질 성분분석 → 재활성화 또는 연료화 가능 여부 판단 → 위탁',
+    diff: '보통', saving: 25
+  },
+  '51-12': {
+    method: '석고보드 원료(R-3) 또는 토양개량제(R-7)',
+    law: '폐기물관리법 시행규칙 별표4의2 제3호(원료재활용), 제7호(토지개량) / KS L 9005(석고보드)',
+    detail: [
+      '[R-3 원료재활용] 폐석고·탈황석고(FGD): 이물질 제거(금속·종이) → 순도 측정(CaSO₄·2H₂O 90% 이상) → 석고보드(KS L 9005) 원료로 재활용',
+      '[R-7 토지개량] 폐석회: 소성(800℃ 이상) 후 생석회 전환 → 토양 산도 교정재 또는 농업용 석회 활용',
+    ],
+    process: '이물질 제거 → 순도 측정 → 석고보드사 직납 또는 토양개량제 제조',
+    diff: '쉬움', saving: 10
+  },
+  '51-13': {
+    method: '시멘트 혼합재(R-3) 또는 성토재(R-5)',
+    law: '폐기물관리법 시행규칙 별표4의2 제3호(원료재활용), 제5호(건설재료) / KS L 5405(플라이애시)',
+    detail: [
+      '[R-3 원료재활용] 플라이애시(석탄회): KS L 5405 1종·2종 기준(45㎛ 체 잔류량, 비표면적 등) 충족 시 시멘트 혼합재로 전량 수매. 쌍용C&E·한일시멘트 연간 협약',
+      '[R-5 건설재료] 석탄 바닥재(bottom ash): 입도 조정 → 도로 하층노반재·성토재 활용',
+      '[R-5 건설재료] 연탄재: 경량성 활용 → 복토재·경량 골재 원료',
+    ],
+    process: '성분분석 → KS 기준 충족 여부 → 시멘트사 협약 납품 또는 성토재 현장 공급',
+    diff: '쉬움', saving: 10
+  },
+  '51-15': {
+    method: 'EPR 재활용(R-3/R-1) — 무상수거 가능',
+    law: '자원의 절약과 재활용 촉진에 관한 법률 제16조(생산자책임재활용제도) / 폐기물관리법 시행규칙 별표4의2',
+    detail: [
+      '[EPR 무상수거] 한국타이어자원재활용협회 ☎02-543-5111 신청 → 분담금 납부업체 무상수거. EPR 의무이행 확인서 발급',
+      '[R-3 물질재활용] 크럼러버(고무분말) 제조: 상온 또는 극저온 파쇄(0.5~2mm) → 운동장 탄성포장·인조잔디 충진재·방음벽 원료',
+      '[R-1 에너지회수] 열분해유화: 열분해로(400~550℃) 투입 → 재생유·카본블랙·가스 생산',
+      '[재사용] 리트레딩(재생타이어): 트럭·버스용 타이어 마모면 제거 후 새 고무 접합. 품질인증 후 재판매',
+    ],
+    process: 'EPR 신청(협회) → 무상수거 또는 재생업체 견적 → 계약',
+    diff: '쉬움', saving: 25
+  },
+  '51-16': {
+    method: '바이오디젤 원료(R-3) — 무상수거 가능',
+    law: '신에너지 및 재생에너지 개발·이용·보급 촉진법 / 석유 및 석유대체연료 사업법(바이오디젤 혼합의무화 RFS) / 폐기물관리법 시행규칙 별표4의2 제3호',
+    detail: [
+      '[R-3 원료재활용] 폐식용유 → 에스테르화 반응(메탄올 + 촉매) → 바이오디젤(BD100) 제조 → 경유에 혼합(BD3~BD20) 의무화 연료',
+      '[무상수거] 100L 이상: SK에코프라임(☎02-2121-5000), GS칼텍스(☎02-2005-1000) 등 무상수거. 한국바이오디젤협회(☎02-785-7710)에서 수거업체 무료 매칭',
+      '[주의] 동물성 유지 혼합 여부 확인. 음식물 잔재 다량 함유 시 전처리(여과) 필요',
+    ],
+    process: '수거업체 연락 → 무상수거 일정 협의 → 용기 제공(일부 업체) → 수거',
+    diff: '쉬움', saving: 25
+  },
+  '51-20': {
+    method: '우드칩·목재펠릿(R-1/R-3) 또는 파티클보드 원료(R-3)',
+    law: '폐기물관리법 시행규칙 별표4의2 제1호(에너지회수), 제3호(원료재활용) / 목재의 지속가능한 이용에 관한 법률 / 고형연료제품 품질기준(환경부 고시)',
+    detail: [
+      '[R-1 에너지회수] 우드칩·목재펠릿: 파쇄(50mm 이하) → 건조(함수율 15% 이하) → 펠릿 성형(ø6~8mm) → 바이오매스 발전소·산업용 보일러 연료. kg당 30~60원 수익 발생',
+      '[R-3 원료재활용] 파티클보드·MDF 원료: 파쇄(10~30mm) → 동화기업·성창기업 등 제조사 직납',
+      '[R-1 SRF 원료] 도장·방부 처리된 오염 폐목재: 할로겐 함량 0.5% 이하 확인 후 SRF 원료로 활용',
+      '[주의] 방부목(CCA 처리): 크롬·구리·비소 함유 → 지정폐기물 해당 여부 확인 필수',
+    ],
+    process: '오염도 확인(도장·방부 여부) → 선별 → 파쇄·건조 → 바이오매스업체 납품',
+    diff: '쉬움', saving: 25
+  },
+  '51-27': {
+    method: '재생섬유 원료(R-3) 또는 SRF 원료(R-1)',
+    law: '폐기물관리법 시행규칙 별표4의2 제3호(원료재활용), 제1호(에너지회수)',
+    detail: [
+      '[R-3 물질재활용] 천연섬유(면·마·울): 개섬(開纖) 처리 → 흡음재·단열재·자동차 내장재 원료. 재생섬유 전문업체 위탁',
+      '[R-3 물질재활용] PET 섬유: 펠릿화 → 재생 폴리에스터 원사(rPET) 생산. 의류·충진재 원료로 활용',
+      '[R-1 에너지회수] 혼방 섬유·오염 섬유: 발열량 기준 충족(3,500 kcal/kg 이상), 염소 0.5% 이하 시 SRF 원료',
+      '[재사용] 상태 양호한 의류: 굿윌스토어(☎1600-0594) 등 무상수거 → 재사용',
+    ],
+    process: '섬유 종류별 선별(천연/합성) → 상태 확인 → 재사용·재생섬유·SRF 경로 분기',
+    diff: '보통', saving: 25
+  },
+  '51-28': {
+    method: '재생지 원료(R-3) — 즉시 수익 발생',
+    law: '자원의 절약과 재활용 촉진에 관한 법률 제16조(EPR) / 폐기물관리법 시행규칙 별표4의2 제3호(원료재활용)',
+    detail: [
+      '[R-3 물질재활용] 골판지(A등급): 묶음 → 한솔제지·무림페이퍼 등 제지사 직납. kg당 80~120원 현금 매입. 단순 분리만으로 즉시 수익 전환',
+      '[R-3 물질재활용] 신문지: kg당 40~70원 / 백상지·복사지: kg당 60~100원 / 혼합지: kg당 20~40원',
+      '[EPR] 폐지는 EPR 의무대상. 분리배출 기준 충족 시 지자체 수거업체 무상수거 가능',
+      '[주의] 코팅지·감열지·카본지: 재생 불가. 별도 분리 후 소각 처리',
+    ],
+    process: '등급별 분리(골판지/신문지/백상지/혼합) → 압축·묶음 → 제지사 또는 고물상 납품',
+    diff: '쉬움', saving: 25
+  },
+  '51-29': {
+    method: '고철·비철금속 매각(R-3) — 즉시 수익 발생',
+    law: '폐기물관리법 시행규칙 별표4의2 제3호(원료재활용) / 자원의 절약과 재활용 촉진에 관한 법률',
+    detail: [
+      '[R-3 물질재활용] 고철(철스크랩): 등급분류(HS·HM·H1·H2) → 현대제철·동국제강 등 전기로 원료. kg당 300~450원 현금 매입. 분리만으로 즉시 수익',
+      '[R-3 물질재활용] 알루미늄 스크랩: 비중 분리(2.7g/cm³) 확인 → 알루미늄 재생주조 원료. kg당 800~1,200원',
+      '[R-3 물질재활용] 구리 스크랩: 품위별(1호·2호·3호) 분리 → 신동업체 원료. kg당 5,000~7,000원',
+      '[주의] 금속류 내 PCB(배전반 등) 포함 시 지정폐기물 해당 → 별도 처리 필수',
+    ],
+    process: '금속 종류별 분리(철/Al/Cu) → 등급 분류 → 지역 고물상 또는 제강소 직납',
+    diff: '쉬움', saving: 10
+  },
+  '51-30': {
+    method: '컬릿(재생유리) 원료(R-3)',
+    law: '자원의 절약과 재활용 촉진에 관한 법률 제16조(EPR) / 폐기물관리법 시행규칙 별표4의2 제3호(원료재활용)',
+    detail: [
+      '[R-3 물질재활용] 색상별 분리(투명·갈색·초록) → 이물질 제거(뚜껑·라벨·도자기) → 파쇄(컬릿) → 유리 원료로 재활용. 색상 혼합 시 단가 하락',
+      '[R-3 원료재활용] 혼합 폐유리: 파쇄 → 건자재(타일·보도블록·단열재) 원료로 활용',
+      '[R-3 원료재활용] 폐유리섬유: 분쇄 → 세라믹 원료 또는 단열재 원료',
+    ],
+    process: '색상별 분리 → 이물질 제거(도자기·금속 혼입 주의) → 파쇄 → 유리제조사 납품',
+    diff: '쉬움', saving: 10
+  },
+  '51-38': {
+    method: '바이오가스화(R-1) 또는 사료·퇴비화(R-3/R-7)',
+    law: '폐기물관리법 시행규칙 별표4의2 제1호(에너지회수), 제3호(원료재활용), 제7호(토지개량) / 음식물류 폐기물의 재활용 세부기준(환경부 고시)',
+    detail: [
+      '[R-1 에너지회수] 바이오가스화: 혐기성 소화(중온 35℃ 또는 고온 55℃, 체류시간 15~25일) → 바이오가스(CH₄ 50~70%) 생산 → 발전·열공급. 소화 후 액비 농지 환원 가능',
+      '[R-3 원료재활용] 사료화: 수분 75% 이하 처리 → 건조(함수율 13% 이하) → 동물사료. 가축 사료 위생·품질 기준(농림부 고시) 충족 필수',
+      '[R-7 토지개량] 퇴비화: C/N비 20~30 조정 → 호기성 부숙(60일 이상) → 유기질비료(비료관리법). 부숙 완료 후 농가 공급',
+      '[지자체 위탁] 위탁처리 시 처분부담금 전액 면제 가능. 시·군·구 환경과에 먼저 문의',
+    ],
+    process: '수분·성상 측정 → 지자체 위탁 또는 민간업체(바이오가스화/사료화/퇴비화) 선택',
+    diff: '쉬움', saving: 15
+  },
+  '51-41': {
+    method: 'EPR 무상수거(R-3) 또는 귀금속 회수(R-3)',
+    law: '자원의 절약과 재활용 촉진에 관한 법률 제16조(EPR) / 전기·전자제품 및 자동차의 자원순환에 관한 법률 / 환경부 EV 폐배터리 회수·재활용 고시(2022)',
+    detail: [
+      '[EPR 무상수거] 소형 폐전지(건전지·휴대폰배터리): 한국배터리산업협회(☎02-6933-0100) EPR 신청 → 무상수거. 회수·재활용 분담금 납부업체 해당',
+      '[R-3 물질재활용] EV 폐배터리: 방전(잔존용량 5% 이하) → 팩 해체 → 블랙매스(Black Mass) 제조 → 습식제련(황산 침출) 또는 건식제련 → Li·Ni·Co·Mn 회수. 성일하이텍(☎041-580-4000) 전문',
+      '[재사용] 잔존용량 70% 이상 EV 배터리: 충방전 성능검사 → ESS(에너지저장시스템)로 2차 사용',
+      '[주의] 손상·화재·침수 배터리: 열폭주(Thermal Runaway) 위험 → 전문업체 별도 위탁 필수',
+    ],
+    process: 'EPR 신청(협회 무상수거) 또는 성일하이텍 등 전문업체 견적 → 안전 방전 → 위탁',
+    diff: '쉬움', saving: 10
+  },
+  '40-01': {
+    method: '순환골재(R-5) 또는 재생아스팔트(R-5)',
+    law: '건설폐기물의 재활용촉진에 관한 법률 제38조(순환골재 의무사용) / 순환골재 품질기준(국토교통부 고시) / 폐기물관리법 시행규칙 별표4의2 제5호',
+    detail: [
+      '[R-5 건설재료] 폐콘크리트: 1차 파쇄(200mm 이하) → 2차 파쇄(40mm 이하) → 이물질 선별(철근·목재) → 순환골재(KS F 2573). 공공공사 의무사용(건설폐기물법 제38조)',
+      '[R-5 건설재료] 폐아스팔트: 선별·파쇄(40mm 이하) → 재생아스팔트혼합물(RAP) 원료. 재생율 10~40%(국토교통부 지침)',
+      '[R-5 건설재료] 폐벽돌·블록·기와: 파쇄(40mm 이하) → 순환골재 또는 경량골재. KCL 품질인증 취득 시 공공공사 납품 가능',
+    ],
+    process: '파쇄 → 이물질 선별(철근·나무·이물질) → 입도별 분급 → KCL 품질인증 → 건설현장 납품',
+    diff: '쉬움', saving: 30
+  },
+  '40-02': {
+    method: 'SRF 원료(R-1) 또는 우드칩(R-1)',
+    law: '건설폐기물의 재활용촉진에 관한 법률 / 폐기물관리법 시행규칙 별표4의2 제1호(에너지회수)',
+    detail: [
+      '[R-1 에너지회수] 건설폐목재: 선별(합성수지·금속 분리) → 파쇄(50mm 이하) → 우드칩·바이오매스 연료. 무료 수거 업체 다수 (바이오매스 발전소 원료)',
+      '[R-1 에너지회수] 건설 폐합성수지: PVC 선별 제거 → 파쇄 → SRF 원료(발열량·염소 기준 확인)',
+    ],
+    process: '가연성 선별 → 폐목재/합성수지 분리 → 파쇄 → 바이오매스업체 또는 SRF 제조업체 납품',
+    diff: '보통', saving: 10
+  },
+  '40-03': {
+    method: '고철 수매(R-3) 또는 순환골재(R-5)',
+    law: '건설폐기물의 재활용촉진에 관한 법률 / 폐기물관리법 시행규칙 별표4의2 제3호·제5호',
+    detail: [
+      '[R-3 원료재활용] 폐금속(철근·형강·H빔): 고철 등급 분류 → 제강소 또는 지역 고철업체 직납. kg당 300원 이상 즉시 수익',
+      '[R-5 건설재료] 불연성 잔재: 파쇄 → 순환골재 또는 성토재 활용',
+    ],
+    process: '금속류 별도 선별 → 고철업체 연락 → 수거·매입',
+    diff: '쉬움', saving: 30
+  },
+  '40-04': {
+    method: '혼합건폐물 선별 위탁(R-3/R-5)',
+    law: '건설폐기물의 재활용촉진에 관한 법률 제21조(중간처분업) / 폐기물관리법',
+    detail: [
+      '[중간처분 위탁] 중간처분업 허가 업체에 혼합 상태로 위탁. 선별시설에서 콘크리트·금속·목재·합성수지 분리 후 각 재활용 경로 처리',
+      '[선별 후 재활용] 콘크리트류→순환골재(R-5) / 금속류→고철수매(R-3) / 목재류→우드칩(R-1) / 합성수지→SRF(R-1)',
+      '[주의] 혼합폐기물은 반드시 허가된 건설폐기물 중간처분업체 위탁. 무허가 처리 시 폐기물관리법 위반',
+    ],
+    process: '허가업체 선정(한국건설순환자원협회 연계) → 위탁계약 → 선별·재활용',
+    diff: '어려움', saving: 30
+  },
+  '91': {
+    method: 'EPR 재활용(R-3) — 분리배출 시 무료 수거',
+    law: '자원의 절약과 재활용 촉진에 관한 법률 제16조(생산자책임재활용제도) / 폐기물관리법',
+    detail: [
+      '[EPR 무상수거] 종이류·유리류·금속류·합성수지류 분리배출 기준 충족 시 지자체 수거업체 무상수거. 별도 비용 없음',
+      '[분리배출 기준] 내용물 비우기 → 이물질 제거 → 재질별 분리(종이/유리/금속/합성수지). 음식물 오염 시 재활용 불가',
+      '[다량배출사업장] 지자체 재활용품 수거업체와 직접 계약. ☎120 콜센터에서 수거 신청',
+    ],
+    process: '재질별 분리배출 → 지자체 수거 신청(☎120) → 무상수거',
+    diff: '쉬움', saving: 15
+  },
+};
+
+function getRecycleInfo(code) {
+  var keys = Object.keys(RECYCLE_DB).sort(function(a,b){return b.length-a.length;});
+  for (var k of keys) { if (code.startsWith(k)) return RECYCLE_DB[k]; }
+  return { method:'재활용 위탁 처리', detail:['re.or.kr에서 처리업체 검색 후 위탁'], process:'업체 선정 후 위탁', law:'폐기물관리법', diff:'보통', saving:0 };
+}
+
+function getCompanyInfo(code) {
+  var keys = Object.keys(COMPANY_DB).sort(function(a,b){return b.length-a.length;});
+  for (var k of keys) { if (code.startsWith(k)) return COMPANY_DB[k]; }
+  return { companies:[{ name:'지역 재활용업체', tel:'지역별 검색', addr:'전국', type:'일반 재활용', note:'re.or.kr에서 검색' }], searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'처리업체 검색', tip:'re.or.kr에서 처리업체를 검색하세요' };
+}
+
+function generateFallbackReport(d) {
+  const idx = d.idx || 1.21;
+  let processCostSum = 0, processKgSum = 0;
+  (d.itemBreakdown || []).forEach(function(item) {
+    var kg = parseFloat(item.kg) || 0;
+    var uc = 60;
+    if (/^51-29|^51-30|^51-04/.test(item.code)) uc = 15;
+    else if (/^51-02|^51-08|^51-21/.test(item.code)) uc = 40;
+    else if (/^51-03|^51-20|^51-27|^51-28/.test(item.code)) uc = 55;
+    else if (/^40/.test(item.code)) uc = 20;
+    processCostSum += kg * uc; processKgSum += kg;
+  });
+  const processCost = processKgSum > 0 ? Math.round(processCostSum / processKgSum) : 55;
+  const k30=Math.round(d.annualKg*.30);
+  const ghg30=(d.annualKg*.30*.26/1000).toFixed(2);
+  const etsVal30=Math.round(parseFloat(ghg30)*90000).toLocaleString();
+  var totalLev3 = d.levy + Math.round(d.levy*1.05) + Math.round(d.levy*1.10);
+
+  const selEx = d.exemptions || [];
+  // 교육자료 기반 감면 상세 안내
+  const EXEMPTION_DETAIL = {
+    '①': {
+      title: '자가 매립 후 재활용',
+      rate_desc: '매립 연도 내 재활용 100% / 익년~2년 내 재활용 50%',
+      condition: '자가매립시설에 단독 매립 후 2년 이내 재활용',
+      docs: '① 폐기물 매립량 증빙자료 ② 연도별 재활용량 증빙서류(배출·처리실적보고서, 재활용시설 운영대장)',
+      tip: '자가매립시설(환경부장관 승인)이 있는 경우만 해당. 선감면 후 정산 방식 적용'
+    },
+    '②': {
+      title: '소각열 에너지회수',
+      rate_desc: '회수율 75%↑→75% / 70~75%→70% / 65~70%→65% / 60~65%→60% / 50~60%→50% / 30~50%→30% (2024년도분~)',
+      condition: '자체 소각시설에서 소각열 에너지 30% 이상 회수·이용 (정상가동일수: 사업장 275일 이상)',
+      docs: '① 소각시설 소각량 증빙자료 ② 에너지회수효율 인증서(국립환경과학원 발급, 소각시설에 문의)',
+      tip: '인증서는 소각시설 운영자가 매년 2~3월 국립환경과학원에서 발급받음. 납부의무자가 소각시설에서 직접 받아 제출'
+    },
+    '③': {
+      title: '폐기물부담금 납부 후 처분',
+      rate_desc: '100%',
+      condition: '자원재활용법에 따라 폐기물부담금을 납부한 제품·재료·용기를 소각·매립하는 경우',
+      docs: '① 폐기물부담금 납부 고지서 및 납부영수증 사본 ② 해당 제품·재료·용기의 소각·매립처분량 증빙자료',
+      tip: '폐기물부담금(제품 생산 시 납부)과 처분부담금(처분 시 납부)이 중복 부과되지 않도록 하는 감면'
+    },
+    '④': {
+      title: '중소기업 감면',
+      rate_desc: '매출 10억 미만→100% / 10~50억→90% / 50~100억→80% / 100~200억→70% / 200~400억→60% / 400~600억→50% (2024년도분~)',
+      condition: '중소기업기본법에 따른 중소기업 + 연간 매출액 600억 미만 (법인 전체 매출액 기준)',
+      docs: '① 중소기업확인서(중소벤처기업부 발급, 콜센터 국번없이 1357) ② 재무제표 또는 부가가치세 과세표준증명원',
+      tip: '폐기물처리업자 등은 추가 요건: 연간 소각·매립량 300톤 미만 OR 반입량 대비 소각·매립량 5% 미만'
+    },
+    '⑤': {
+      title: '지정폐기물 처분',
+      rate_desc: '100%',
+      condition: '폐기물관리법 제2조제4호에 따른 지정폐기물을 소각·매립',
+      docs: '① 해당 폐기물 배출 및 처리 실적보고(올바로시스템)',
+      tip: '지정폐기물(폐유·폐산 등 유해물질) 처분은 전액 감면. 지정폐기물 여부는 폐기물관리법 시행령 별표1 확인'
+    },
+  };
+
+  const exSection = selEx.length > 0
+    ? selEx.map(function(e) {
+        var detail = EXEMPTION_DETAIL[e.num] || {};
+        var estAmt = Math.round(d.levy * parseInt(e.rate) / 100);
+        return '**' + e.num + ' ' + e.title + '**\n' +
+          '- 감면율: ' + (detail.rate_desc || e.rate) + '\n' +
+          '- 예상 감면액: 약 **' + estAmt.toLocaleString() + '원**\n' +
+          '- 감면 조건: ' + (detail.condition || '') + '\n' +
+          '- 제출 서류: ' + (detail.docs || e.detail) + '\n' +
+          '- 실무 팁: ' + (detail.tip || '') + '\n' +
+          '- 신청: budamgum.or.kr 정기신고 → 감면 신청 선택';
+      }).join('\n\n')
+    : '감면 항목을 선택하지 않으셨습니다.\n\n**신청 가능한 주요 감면 항목** (budamgum.or.kr 정기신고 시 함께 신청):\n\n' +
+      '**④ 중소기업 감면** — 가장 많이 활용\n' +
+      '- 조건: 중소기업기본법상 중소기업 + 연 매출 600억 미만\n' +
+      '- 감면율: 매출 10억 미만 → **100%** / 10~50억 → **90%** / 50~100억 → **80%** / 100~200억 → **70%** / 200~400억 → **60%** / 400~600억 → **50%** (2024년도분~)\n' +
+      '- 서류: 중소기업확인서(☎ 국번없이 1357) + 재무제표\n\n' +
+      '**② 소각열 에너지회수** — 자체 소각로 보유 시\n' +
+      '- 조건: 소각열 에너지 30% 이상 회수·이용 (정상가동일수 275일 이상)\n' +
+      '- 감면율: 회수율 75%↑ → **75%** / 50~60% → **50%** 등 (2024년도분~)\n' +
+      '- 서류: 에너지회수효율 인증서(소각시설에서 국립환경과학원 발급)\n\n' +
+      '> 💡 정기신고 기한: **매년 3월 31일** / 납부기한: **5월 20일**\n' +
+      '> 납부금액 100만원 이상은 4회 분할납부 가능 (5·7·9·11월 20일)';
+
+  let itemsHtml = '';
+  const easyItems = [], medItems = [], hardItems = [];
+
+  (d.itemBreakdown||[]).forEach(function(item) {
+    const info = getRecycleInfo(item.code);
+    const co   = getCompanyInfo(item.code);
+    const saving = item.levy;
+    const diffColor = info.diff==='쉬움'?'#1a6b3c':info.diff==='보통'?'#b8962e':'#c0392b';
+    const diffBg    = info.diff==='쉬움'?'#e8f5ee':info.diff==='보통'?'#fef9e7':'#fdf0ee';
+    const detailHtml = (info.detail||[]).map(function(d) {
+      return '<li style="margin:4px 0;font-size:12px;color:#2a3a2a;line-height:1.65">' + d + '</li>';
+    }).join('');
+
+    // 관계기관 섹션 (지자체, 한국환경공단 등)
+    var govOrgsHtml = '';
+    if (co.govOrgs && co.govOrgs.length > 0) {
+      govOrgsHtml = '<div style="background:#f0f4ff;border:1px solid #b8c8ee;border-radius:8px;padding:11px 14px;margin-bottom:10px">' +
+        '<div style="font-size:11.5px;font-weight:700;color:#1a3a8a;margin-bottom:8px">🏛️ 관계기관 안내</div>' +
+        co.govOrgs.map(function(org) {
+          var telHtml = org.tel ? '<span style="font-size:11px;color:#1a3a8a;font-weight:700;margin-left:6px">☎ ' + org.tel + '</span>' : '';
+          var siteHtml = org.site ? ' <a href="' + org.site + '" target="_blank" rel="noopener" style="font-size:11px;color:#1a6b3c;font-weight:600;margin-left:4px">' + org.site + ' →</a>' : '';
+          return '<div style="padding:6px 0;border-bottom:1px solid #d0daf0">' +
+            '<div style="font-size:12px;font-weight:700;color:#1a3a8a">' + org.name + telHtml + siteHtml + '</div>' +
+            '<div style="font-size:11.5px;color:#2a3a6a;line-height:1.6;margin-top:2px">' + org.desc + '</div>' +
+            '</div>';
+        }).join('') +
+        '</div>';
+    }
+
+    // 관련기관 섹션 (협회 등)
+    var relOrgsHtml = '';
+    if (co.relOrgs && co.relOrgs.length > 0) {
+      relOrgsHtml = '<div style="background:#eef6ff;border:1px solid #b0ccee;border-radius:8px;padding:11px 14px;margin-bottom:10px">' +
+        '<div style="font-size:11.5px;font-weight:700;color:#1a4a8a;margin-bottom:8px">🤝 관련 기관</div>' +
+        co.relOrgs.map(function(org) {
+          var siteHtml = org.site ? '<a href="' + org.site + '" target="_blank" rel="noopener" style="font-size:11px;color:#1a6b3c;font-weight:600;margin-left:6px">' + org.site + ' →</a>' : '';
+          return '<div style="padding:5px 0;border-bottom:1px solid #cce0f8">' +
+            '<div style="font-size:12px;font-weight:700;color:#1a4a8a">' + org.name + siteHtml + '</div>' +
+            '<div style="font-size:11.5px;color:#2a3a5a;line-height:1.6;margin-top:2px">' + org.desc + '</div>' +
+            '</div>';
+        }).join('') +
+        '</div>';
+    }
+
+    // 업체 테이블
+    var coRows = co.companies.map(function(c) {
+      return '<tr>' +
+        '<td style="padding:7px 10px;border-bottom:1px solid #e8f0ea;font-weight:600;color:#111;font-size:11.5px">' + c.name + '</td>' +
+        '<td style="padding:7px 10px;border-bottom:1px solid #e8f0ea;font-size:12px;font-weight:700;color:#1a6b3c;white-space:nowrap">☎ ' + c.tel + '</td>' +
+        '<td style="padding:7px 10px;border-bottom:1px solid #e8f0ea;font-size:11px;color:#5a6a5a">' + c.note + '</td>' +
+        '</tr>';
+    }).join('');
+
+    var coTableHtml = co.companies.length > 0
+      ? '<div style="overflow-x:auto;border-radius:8px;border:1px solid #c8ddd4;margin-bottom:8px">' +
+          '<table style="width:100%;border-collapse:collapse;font-size:11.5px">' +
+            '<thead><tr style="background:#1a6b3c;color:#fff">' +
+              '<th style="padding:7px 10px;text-align:left;font-size:11.5px">업체명</th>' +
+              '<th style="padding:7px 10px;text-align:left;font-size:11.5px">전화번호</th>' +
+              '<th style="padding:7px 10px;text-align:left;font-size:11.5px">비고</th>' +
+            '</tr></thead>' +
+            '<tbody>' + coRows + '</tbody>' +
+          '</table>' +
+        '</div>'
+      : '';
+
+    var searchUrl = co.searchUrl || 'https://www.re.or.kr/info/listTrtmPage.do';
+    var searchLabel = co.searchLabel || '순환자원정보센터에서 업체 검색';
+
+    itemsHtml += '<div style="border:1.5px solid #c8ddd4;border-radius:12px;margin:14px 0;overflow:hidden;background:#fff;box-shadow:0 1px 6px rgba(26,107,60,0.07)">' +
+  '<div style="background:linear-gradient(90deg,#f0f7f3,#fafcfb);padding:11px 16px;border-bottom:1px solid #d8ece3;display:flex;align-items:center;gap:10px;flex-wrap:wrap">' +
+    '<span style="font-size:10.5px;color:#7a9080;background:#e8f5ee;border:1px solid #c2e0cd;border-radius:10px;padding:2px 9px">' + item.code + '</span>' +
+    '<strong style="font-size:14.5px;color:#0d2016">' + item.name + '</strong>' +
+    '<span style="margin-left:auto;font-size:11px;font-weight:700;color:' + diffColor + ';background:' + diffBg + ';padding:2px 10px;border-radius:10px">전환 ' + info.diff + '</span>' +
+  '</div>' +
+  '<div style="padding:14px 16px">' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">' +
+      '<div style="background:#fff5f5;border-radius:8px;padding:10px 13px">' +
+        '<div style="font-size:10px;color:#9a7070;margin-bottom:4px;font-weight:600">📦 현재 처리 현황</div>' +
+        '<div style="font-size:12.5px;font-weight:700;color:#c0392b">' + item.treat + '</div>' +
+        '<div style="font-size:11.5px;color:#7a5050;margin-top:3px">' + item.kg.toLocaleString() + 'kg/년 · 부담금 <strong>' + item.levy.toLocaleString() + '원</strong></div>' +
+      '</div>' +
+      '<div style="background:#f0f7f3;border-radius:8px;padding:10px 13px">' +
+        '<div style="font-size:10px;color:#5a9070;margin-bottom:4px;font-weight:600">♻️ 재활용 전환 시</div>' +
+        '<div style="font-size:12.5px;font-weight:700;color:#1a6b3c">' + info.method + '</div>' +
+        '<div style="font-size:11.5px;color:#2a5a3a;margin-top:3px">연간 <strong>' + saving.toLocaleString() + '원</strong> 절감 가능</div>' +
+      '</div>' +
+    '</div>' +
+    '<div style="background:#f8fbf9;border:1px solid #d0e8da;border-radius:8px;padding:11px 14px;margin-bottom:10px">' +
+      '<div style="font-size:11.5px;font-weight:700;color:#1a6b3c;margin-bottom:7px">🔧 처리 방법 상세</div>' +
+      '<ul style="margin:0;padding-left:16px">' + detailHtml + '</ul>' +
+      '<div style="margin-top:8px;padding-top:8px;border-top:1px solid #d0e8da;display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:11px;color:#5a7060">' +
+        '<span style="font-weight:700;color:#3a5a40">처리 절차:</span><span>' + (info.process||'') + '</span>' +
+        '<span style="font-weight:700;color:#3a5a40">관련 법령:</span><span>' + (info.law||'') + '</span>' +
+      '</div>' +
+    '</div>' +
+    '<div style="background:#fffbf0;border:1px solid #f0d870;border-radius:8px;padding:9px 13px;margin-bottom:10px;font-size:11.5px;color:#6a5000">' +
+      '💡 <strong>실무 팁:</strong> ' + (co.tip||'') +
+    '</div>' +
+    relOrgsHtml +
+    govOrgsHtml +
+    '<div style="font-size:12px;font-weight:700;color:#1a6b3c;margin-bottom:7px">🏢 재활용 업체</div>' +
+    coTableHtml +
+    getLocalCompaniesHtml(item.code) +
+    '<div style="background:#f0f7f3;border-radius:8px;padding:10px 14px">' +
+      '<div style="font-size:11.5px;font-weight:700;color:#1a6b3c;margin-bottom:6px">🔍 전국 업체 직접 검색</div>' +
+      '<a href="' + searchUrl + '" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:#1a6b3c;color:#fff;text-decoration:none;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:700">' +
+        '🔍 ' + searchLabel + ' →' +
+      '</a>' +
+      '<span style="margin-left:8px;font-size:10.5px;color:#7a9080">www.re.or.kr · ☎ 1800-8830</span>' +
+    '</div>' +
+  '</div>' +
+'</div>';
+    if (info.diff==='쉬움') easyItems.push({name:item.name,saving});
+    else if (info.diff==='보통') medItems.push({name:item.name,saving});
+    else hardItems.push({name:item.name,saving});
+  });
+
+  if (!itemsHtml) itemsHtml = '<p style="color:#7a9080;padding:12px">선택된 폐기물 품목이 없습니다.</p>';
+
+
+  var totalLev3 = d.levy + Math.round(d.levy*1.05) + Math.round(d.levy*1.10);
+  window._itemsHtml = itemsHtml;
+  return `## 📋 현황 요약
+
+**${d.company}**은(는) 연간 **${d.annualKg.toLocaleString()} kg**의 폐기물을 처분하고 있으며, ${d.dispYear}년 기준 예상 처분부담금은 **${d.levy.toLocaleString()}원**입니다.
+
+폐기물을 재활용으로 전환하면 이 비용을 줄일 수 있습니다. 아래 품목별 재활용 방법과 연락처를 참고해 지금 바로 시작하세요.
+
+---
+
+## 💰 처분부담금 감면 신청
+
+${exSection}
+
+---
+
+## ♻️ 폐기물별 재활용 방법 및 업체 안내
+
+> 아래 **${(d.itemBreakdown||[]).length}개 폐기물**에 대해 재활용 방법과 연락할 수 있는 업체를 정리했습니다.
+
+__ITEMS_HTML__
+
+---
+
+---
+
+## 🌱 환경 개선 효과 (30% 전환 기준)
+
+| 항목 | 수치 |
+|---|---:|
+| 온실가스 감축 | **${ghg30} tCO₂e/년** |
+| 탄소배출권 가치 (9만원/t 기준) | **${etsVal30}원/년** |
+| 매립지 절감 용량 | **약 ${Math.round(d.annualKg*.3/500)}m³/년** |
+| 재활용 전환량 | **${k30.toLocaleString()} kg/년** |
+
+> <small>📐 **계산 근거**
+> - 온실가스 감축: 전환량(${k30.toLocaleString()}kg) × 0.26 kgCO₂/kg ÷ 1,000 = ${ghg30} tCO₂e
+>   (0.26은 환경부 고시 폐기물 소각 온실가스 배출계수 평균값 적용)
+> - 탄소배출권 가치: ${ghg30} tCO₂e × 90,000원/t (K-ETS 기준가격 적용)
+> - 매립지 절감: 전환량 ÷ 500kg/m³ (폐기물 평균 겉보기밀도 적용)
+> - 실제 수치는 폐기물 종류·처리방식에 따라 다를 수 있습니다.</small>
+
+---
+
+## ✅ 추진 방향 안내
+
+### ① 감면 신청 여부 먼저 확인하세요
+아직 감면 신청을 하지 않으셨다면, 재활용 전환보다 먼저 챙기실 수 있는 부분입니다.
+- budamgum.or.kr 접속 → 신고 내역 조회 → 감면 항목 신청 여부 확인
+- 감면 미신청 시 정기신고 수정 후 감면 항목 추가 가능 (중소기업 감면, 소각열 에너지회수 등)
+- 중소기업 감면의 경우 **연간 ${Math.round((d.levy||0)*0.5).toLocaleString()}원~${(d.levy||0).toLocaleString()}원 절감**이 가능합니다
+- 필요 서류: 중소기업확인서(중소벤처기업부 발급), 직전연도 재무제표
+- 문의: 광주전남제주환경본부 폐기물처분부담금 담당 ☎ **062-949-0305**
+
+### ② 재활용 업체 견적 알아보기
+위 폐기물 카드의 업체에 연락하거나 순환자원정보센터에서 추가 업체를 검색하실 수 있습니다.
+- 순환자원정보센터 ☎ **1800-8830** (평일 09~17시) / www.re.or.kr
+- **'전환 쉬움'** 등급 품목(고철·폐지·폐유리 등)부터 살펴보시면 좋습니다
+- 여러 업체에 견적을 문의해 수거 조건과 단가를 비교해 보세요
+- 견적 확인 시 참고사항: 수거 주기, kg당 단가, 올바로시스템 연계 여부
+
+### ③ 위탁처리 계약 시 확인사항
+재활용 업체와 계약하실 때 아래 내용을 확인하시면 도움이 됩니다.
+- 계약서에 처리 방법, 처리 장소, 수거 주기, 계량 방법이 명시되어 있는지 확인
+- 올바로시스템과 연계된 업체인지 확인 (처분부담금 자동 차감에 필요)
+- 사업장 내 품목별 분리 보관 공간 마련 여부 검토
+
+> 📞 **처분부담금 문의**: 광주전남제주환경본부 폐기물처분부담금 담당 **☎ 062-949-0305** (광주·전남·제주 관할)
+> 📞 **재활용업체 검색**: 순환자원정보센터 **☎ 1800-8830** (평일 09~17시) / www.re.or.kr
+> 📞 **중소기업확인서 발급**: ☎ **국번없이 1357** (중소벤처기업부)
+> 🌐 **신고·감면 신청**: wds.budamgum.or.kr`;
+}
+
+function showReport(data, text) {
+  const rSec = document.getElementById('reportSection');
+
+  // 메타 헤더 업데이트
+  const metaEl = document.getElementById('reportMeta');
+  if (metaEl) {
+    metaEl.innerHTML = `
+      <div class="rm-label">컨설팅 리포트 · ${new Date().toLocaleDateString('ko-KR')}</div>
+      <h3>${data.company} — ${data.industry || '폐기물처분부담금 컨설팅'}</h3>
+      <div class="rm-tags">
+        <span class="rm-tag">${data.dispYear}년 기준</span>
+        <span class="rm-tag">처분량 ${data.annualKg.toLocaleString()}kg</span>
+        <span class="rm-tag">부담금 ${data.levy.toLocaleString()}원</span>
+        ${data.wasteType ? `<span class="rm-tag">${data.wasteType}</span>` : ''}
+      </div>`;
+  }
+
+  // CHART_DATA 추출
+  const chartMatch = text.match(/<CHART_DATA>([\s\S]*?)<\/CHART_DATA>/);
+  let chartData = null;
+  if (chartMatch) {
+    try { chartData = JSON.parse(chartMatch[1].trim()); } catch(e) {}
+    text = text.replace(/<CHART_DATA>[\s\S]*?<\/CHART_DATA>/, '');
+  }
+
+  // itemsHtml 치환 (__ITEMS_HTML__ 자리에)
+  const processedText = text.replace('__ITEMS_HTML__', window._itemsHtml || '');
+  const html = markdownToHtml(processedText);
+
+  document.getElementById('reportContent').innerHTML = html;
+  rSec.classList.add('show');
+
+  // 차트 주입
+  if (chartData) {
+    setTimeout(() => injectCharts(chartData, data), 100);
+  }
+}
+
+
+// ════════════════════════════════════════════
+// 재활용 업체 DB
+// ※ companies[] = 순환자원정보센터 등록 재활용처리업체 또는 EPR 협회
+// ※ 원료 수매처(제조사)는 tip에 안내 → 재활용처리업체와 혼동 방지
+// ※ 실제 업체는 반드시 re.or.kr(☎1800-8830)에서 검색
+// ════════════════════════════════════════════
+const COMPANY_DB = {
+  '51-01': {
+    relOrgs: [],
+    govOrgs: [
+      { name:'각 지자체 음식물자원화센터', tel:'시·군·구 환경과 문의', site:'', desc:'유기성오니·음식물류 바이오가스화·퇴비화 위탁 처리. 위탁 시 처분부담금 면제 가능.' },
+      { name:'한국바이오가스협회', tel:'', site:'https://www.kbga.kr', desc:'바이오가스 처리업체 목록 제공 및 지역 업체 무료 연결 서비스.' },
+    ],
+    companies: [],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 오니 재활용업체 검색',
+    tip:'시멘트사(쌍용C&E 02-726-0114, 한일시멘트 043-870-5114)는 무기성오니를 원료로 수매합니다. 단, 이들은 재활용처리업체가 아닌 원료 수매처이므로, 위탁처리 계약이 필요한 경우 re.or.kr에서 재활용업체를 별도로 검색하세요.'
+  },
+  '51-02': {
+    relOrgs: [], govOrgs: [],
+    companies: [],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 오니 재활용업체 검색',
+    tip:'탈수 후 함수율 85% 이하면 시멘트사 원료구매팀(쌍용C&E 02-726-0114)에 직접 연락하세요. 아래에서 광주·전남 지역 업체를 확인하거나 re.or.kr에서 추가 업체를 검색하세요.'
+  },
+  '51-03': {
+    relOrgs: [], govOrgs: [
+      { name:'한국환경공단 순환자원정보센터', tel:'1800-8830', site:'https://www.re.or.kr', desc:'SRF 인증업체 목록 제공. 폐합성수지 재활용업체 지역별 검색 서비스. 평일 09~17시.' },
+    ],
+    companies: [],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 폐합성수지 재활용업체 검색',
+    tip:'SRF 제조업체와 재생수지 펠릿 업체는 re.or.kr에서 "폐합성수지"로 검색하세요. 지역별로 업체가 다르므로 3곳 이상 견적을 비교하는 것이 좋습니다.'
+  },
+  '51-04': {
+    relOrgs: [], govOrgs: [],
+    companies: [],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 광재류 재활용업체 검색',
+    tip:'쌍용C&E(02-726-0114), 성신양회(02-3445-6114) 등 시멘트사는 고로슬래그를 원료로 수매(무료 수거 가능)합니다. 단 이들은 원료 수매처이며, 재활용처리업체는 re.or.kr에서 검색하세요.'
+  },
+  '51-05': {
+    relOrgs: [], govOrgs: [],
+    companies: [],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 분진류 재활용업체 검색',
+    tip:'중금속 성분분석을 먼저 하세요. 아연 함유 분진은 (주)고려아연(051-610-1114)이 재련 원료로 수매합니다. 일반 분진은 re.or.kr에서 "분진" 검색 후 재활용업체에 성분표를 제출하세요.'
+  },
+  '51-06': {
+    relOrgs: [], govOrgs: [], companies: [],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 폐주물사 재활용업체 검색',
+    tip:'re.or.kr에서 "폐주물사" 검색 후 3곳 이상 견적을 받으세요.'
+  },
+  '51-07': {
+    relOrgs: [], govOrgs: [], companies: [],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 폐내화물 재활용업체 검색',
+    tip:'re.or.kr에서 "폐내화물" 검색 후 업체에 문의하세요. 쌍용C&E(02-726-0114)는 시멘트 원료로 수매 협의 가능합니다.'
+  },
+  '51-08': {
+    relOrgs: [], govOrgs: [], companies: [],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 소각재 재활용업체 검색',
+    tip:'소각재 안정화 처리 후 성토재로 재활용하는 업체는 re.or.kr에서 검색하세요. 시멘트사는 성분 기준 충족 시 원료로 수매합니다.'
+  },
+  '51-11': {
+    relOrgs: [], govOrgs: [], companies: [],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 폐흡착제 재활용업체 검색',
+    tip:'오염도 확인 후 re.or.kr에서 "폐흡착제" 검색, 업체에 샘플을 보내 처리 가능 여부를 확인받으세요.'
+  },
+  '51-12': {
+    relOrgs: [], govOrgs: [], companies: [],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 폐석고 재활용업체 검색',
+    tip:'순도 측정(CaSO₄·2H₂O 90% 이상) 후 re.or.kr에서 "폐석고" 검색, 지역 재활용업체에 문의하세요.'
+  },
+  '51-13': {
+    relOrgs: [], govOrgs: [], companies: [],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 연소잔재물 재활용업체 검색',
+    tip:'쌍용C&E(02-726-0114), 한일시멘트(043-870-5114)는 플라이애시를 시멘트 원료로 수매합니다. 재활용처리업체는 re.or.kr에서 검색하세요.'
+  },
+  '51-15': {
+    relOrgs: [], govOrgs: [],
+    companies: [
+      { name:'한국타이어자원재활용협회 (EPR 무상수거)', tel:'02-543-5111', note:'EPR 분담금 납부업체는 무상수거 신청 가능. 회수·재활용 의무이행 확인서 발급' },
+    ],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 폐타이어 재활용업체 검색',
+    tip:'EPR 분담금 납부업체라면 협회 신청으로 무상 수거됩니다. 고무분말·열분해유화 처리업체는 re.or.kr에서 검색하세요.'
+  },
+  '51-16': {
+    relOrgs: [], govOrgs: [],
+    companies: [
+      { name:'한국바이오디젤협회 (수거업체 무료 매칭)', tel:'02-785-7710', note:'지역별 수거업체 무료 연결 서비스' },
+    ],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 폐식용유 재활용업체 검색',
+    tip:'SK에코프라임(02-2121-5000), GS칼텍스(02-2005-100L 이상이면 직접 연락해 무상수거 일정을 잡을 수 있습니다.'
+  },
+  '51-20': {
+    relOrgs: [], govOrgs: [],
+    companies: [
+      { name:'한국바이오매스협회 (지역업체 무료 연결)', tel:'02-3453-0690', note:'인근 목재펠릿·우드칩 재활용업체 무료 매칭' },
+    ],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 폐목재 재활용업체 검색',
+    tip:'동화기업(02-3489-실제 재활용처리업체는 re.or.kr에서 "폐목재"로 검색하세요.'
+  },
+  '51-27': {
+    relOrgs: [], govOrgs: [],
+    companies: [
+      { name:'굿윌스토어 (의류·섬유 재사용 수거)', tel:'1600-0594', note:'상태 좋은 의류·섬유 무상수거 후 재사용' },
+    ],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 폐섬유 재활용업체 검색',
+    tip:'재생섬유 원료업체는 re.or.kr에서 "폐섬유"로 검색하세요.'
+  },
+  '51-28': {
+    relOrgs: [], govOrgs: [], companies: [],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 폐지류 재활용업체 검색',
+    tip:'골판지 A급은 kg당 80~120원 즉시 매입 가능합니다. 아래에서 광주·전남 지역 업체를 확인하거나 re.or.kr에서 추가 업체를 검색하세요.'
+  },
+  '51-29': {
+    relOrgs: [], govOrgs: [], companies: [],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 폐금속류 재활용업체 검색',
+    tip:'등급 분리(철/스테인리스/비철)만 해도 단가가 크게 오릅니다. 아래에서 광주·전남 지역 업체를 확인하거나 re.or.kr에서 추가 업체를 검색하세요.'
+  },
+  '51-30': {
+    relOrgs: [], govOrgs: [], companies: [],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 폐유리류 재활용업체 검색',
+    tip:'색상별(투명·갈색·초록)로 분리하면 재활용업체에서 더 높은 단가를 받을 수 있습니다. 아래에서 광주·전남 지역 업체를 확인하거나 re.or.kr에서 추가 업체를 검색하세요.'
+  },
+  '51-38': {
+    relOrgs: [],
+    govOrgs: [
+      { name:'각 지자체 음식물자원화센터', tel:'시·군·구 환경과 문의', site:'', desc:'음식물류폐기물 바이오가스화·퇴비화·사료화 위탁 처리. 위탁 시 처분부담금 면제 + 처리비 지원 가능.' },
+      { name:'한국바이오가스협회', tel:'', site:'https://www.kbga.kr', desc:'음식물·유기성폐기물 바이오가스화 처리업체 목록 제공 및 지역 업체 무료 연결.' },
+    ],
+    companies: [
+      { name:'(주)세화환경 (광주·전남 지역)', tel:'062-373-0114', note:'광주·전남 음식물 바이오가스화 전문 처리업체' },
+    ],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 음식물폐기물 재활용업체 검색',
+    tip:'지자체 자원화센터 위탁 시 처분부담금이 면제될 수 있습니다. 먼저 시·군·구 환경과에 문의하세요.'
+  },
+  '51-41': {
+    relOrgs: [], govOrgs: [],
+    companies: [
+      { name:'성일하이텍(주) (EV 배터리 재활용 전문)', tel:'041-580-4000', note:'리튬·코발트·니켈 등 귀금속 회수 전문 (코스피 상장 재활용업체)' },
+      { name:'한국배터리산업협회 (EPR 무상수거)', tel:'02-6933-0100', note:'EPR 의무대상 폐전지 무상수거 신청 창구' },
+    ],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 폐전지류 재활용업체 검색',
+    tip:'성일하이텍은 실제 재활용처리업체입니다. EPR 의무대상이면 협회 신청으로 무상수거 가능합니다.'
+  },
+  '40-01': {
+    relOrgs: [], govOrgs: [],
+    companies: [
+      { name:'한국건설순환자원협회 (인증업체 무료 매칭)', tel:'02-2049-0680', note:'KCL 품질인증 순환골재 재활용업체 무료 연결' },
+    ],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 건설폐재류 재활용업체 검색',
+    tip:'협회에 전화하면 인근 인증 처리업체를 연결해줍니다. 공공공사 의무사용으로 수요가 안정적입니다.'
+  },
+  '40-02': {
+    relOrgs: [], govOrgs: [],
+    companies: [
+      { name:'한국바이오매스협회 (건설폐목재 우드칩)', tel:'02-3453-0690', note:'건설폐목재 우드칩 처리업체 무료 연결' },
+    ],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 가연성건폐물 재활용업체 검색',
+    tip:'건설폐목재는 우드칩 처리업체에서 무료 수거하는 경우가 많습니다. SRF 제조업체는 re.or.kr에서 검색하세요.'
+  },
+  '40-03': {
+    relOrgs: [], govOrgs: [],
+    companies: [
+      { name:'한국건설순환자원협회', tel:'02-2049-0680', note:'건설폐기물 종합처리업체 연결' },
+    ],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 불연성건폐물 재활용업체 검색',
+    tip:'철근·형강 등 금속류를 별도 선별하면 고철 매입 수익이 발생합니다. 수거 재활용업체는 re.or.kr에서 검색하세요.'
+  },
+  '40-04': {
+    relOrgs: [], govOrgs: [],
+    companies: [
+      { name:'한국건설순환자원협회 (중간처분업체 연계)', tel:'02-2049-0680', note:'혼합건폐물 허가 중간처분업체 무료 연결' },
+    ],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 혼합건폐물 재활용업체 검색',
+    tip:'혼합 상태로 위탁 가능한 중간처분업 허가 업체를 협회에서 연결해줍니다.'
+  },
+  '91': {
+    relOrgs: [], govOrgs: [],
+    companies: [
+      { name:'각 지자체 재활용 수거업체 (☎ 120)', tel:'120', note:'분리배출 기준 충족 시 무료 수거' },
+    ],
+    searchUrl:'https://www.re.or.kr/info/listTrtmPage.do', searchLabel:'순환자원정보센터에서 생활폐기물 재활용업체 검색',
+    tip:'분리배출 기준만 충족하면 무료로 수거됩니다. 120으로 수거 방법을 안내받으세요.'
+  },
+};
+
+
+// ════════════════════════════════════════════
+// 폐기물 분류 데이터 (법령 별표 기반)
+// ════════════════════════════════════════════
+const WASTE_DB = {
+  사업장일반폐기물: [
+    { group: '유기성·무기성 오니 (51-01/02)', items: [
+      { code:'51-01-02', name:'하수처리오니' },
+      { code:'51-01-05', name:'펄프·제지공정오니' },
+      { code:'51-01-06', name:'기타 공정오니' },
+      { code:'51-01-08', name:'기타 폐수처리오니' },
+      { code:'51-02-01', name:'무기성 폐수처리오니' },
+      { code:'51-02-05', name:'건설오니' },
+    ]},
+    { group: '폐합성고분자화합물 (51-03)', items: [
+      { code:'51-03-01', name:'폐합성수지류(비PVC)' },
+      { code:'51-03-02', name:'폐합성고무류' },
+      { code:'51-03-03', name:'폐PVC수지류' },
+      { code:'51-03-04', name:'폐폴리우레탄폼' },
+      { code:'51-03-06', name:'폐발포합성수지' },
+      { code:'51-03-07', name:'플라스틱 폐포장재' },
+    ]},
+    { group: '광재류 (51-04)', items: [
+      { code:'51-04-01', name:'고로슬래그' },
+      { code:'51-04-02', name:'제강슬래그' },
+      { code:'51-04-03', name:'비철금속제련광재' },
+    ]},
+    { group: '분진류 (51-05)', items: [
+      { code:'51-05-01', name:'제철공정분진' },
+      { code:'51-05-02', name:'시멘트제조분진' },
+      { code:'51-05-99', name:'기타 분진' },
+    ]},
+    { group: '폐내화물·소각재 (51-07/08)', items: [
+      { code:'51-07-01', name:'폐내화물' },
+      { code:'51-08-04', name:'사업장 소각시설 바닥재' },
+      { code:'51-08-06', name:'사업장 소각시설 소각재' },
+    ]},
+    { group: '폐촉매·흡착제 (51-10/11)', items: [
+      { code:'51-10-01', name:'금속성 폐촉매' },
+      { code:'51-11-01', name:'폐흡착제' },
+      { code:'51-11-03', name:'폐활성탄' },
+    ]},
+    { group: '폐타이어·폐식용유 (51-15/16)', items: [
+      { code:'51-15-01', name:'자동차 폐타이어' },
+      { code:'51-16-00', name:'폐식용유' },
+    ]},
+    { group: '동·식물성잔재물 (51-17)', items: [
+      { code:'51-17-02', name:'축산물가공잔재물' },
+      { code:'51-17-24', name:'초본류' },
+      { code:'51-17-25', name:'커피찌꺼기' },
+      { code:'51-17-26', name:'버섯폐배지' },
+      { code:'51-17-30', name:'식재료 및 조리부산물' },
+    ]},
+    { group: '폐전기전자제품 (51-18)', items: [
+      { code:'51-18-01', name:'가정용 폐전기전자제품' },
+      { code:'51-18-02', name:'산업용 폐전기전자제품' },
+    ]},
+    { group: '폐목재류 (51-20)', items: [
+      { code:'51-20-22', name:'제재부산물·목재가공부산물' },
+      { code:'51-20-23', name:'폐포장목재·건설현장 폐목재(깨끗한)' },
+      { code:'51-20-24', name:'페인트·접착제 사용 폐목재' },
+      { code:'51-20-27', name:'폐가구류' },
+    ]},
+    { group: '폐금속류 (51-29)', items: [
+      { code:'51-29-01', name:'고철' },
+      { code:'51-29-02', name:'비철금속(Al·Cu·Zn 등)' },
+      { code:'51-29-04', name:'폐금속용기류' },
+    ]},
+    { group: '폐유리류 (51-30)', items: [
+      { code:'51-30-01', name:'폐유리' },
+      { code:'51-30-04', name:'폐유리섬유' },
+    ]},
+    { group: '폐섬유·폐지류 (51-27/28)', items: [
+      { code:'51-27-01', name:'폐천연섬유' },
+      { code:'51-27-02', name:'폐합성섬유' },
+      { code:'51-28-02', name:'폐종이류' },
+      { code:'51-28-03', name:'폐벽지' },
+    ]},
+    { group: '폐전지류 (51-41)', items: [
+      { code:'51-41-01', name:'폐일차전지' },
+      { code:'51-41-05', name:'전기차 폐이차전지' },
+      { code:'51-41-07', name:'폐양극활물질' },
+    ]},
+    { group: '음식물·폐석고 (51-12/38)', items: [
+      { code:'51-12-01', name:'폐석고' },
+      { code:'51-38-01', name:'음식물류폐기물' },
+    ]},
+    { group: '폐토사·콘크리트 (51-21/22)', items: [
+      { code:'51-21-01', name:'폐토사' },
+      { code:'51-22-01', name:'폐콘크리트' },
+      { code:'51-23-00', name:'폐아스팔트콘크리트' },
+    ]},
+  ],
+  건설폐기물: [
+    { group: '가연성 건설폐기물', items: [
+      { code:'40-02-06', name:'폐목재(건설현장)' },
+      { code:'40-02-07', name:'폐합성수지(건설)' },
+      { code:'40-02-08', name:'폐섬유(건설)' },
+      { code:'40-02-09', name:'폐벽지(건설)' },
+    ]},
+    { group: '불연성 건설폐재류', items: [
+      { code:'40-01-01', name:'폐콘크리트' },
+      { code:'40-01-02', name:'폐아스팔트콘크리트' },
+      { code:'40-01-03', name:'폐벽돌' },
+      { code:'40-01-04', name:'폐블록' },
+      { code:'40-01-05', name:'폐기와' },
+      { code:'40-04-13', name:'건설폐토석' },
+      { code:'40-03-10', name:'건설오니' },
+      { code:'40-03-11', name:'폐금속류(건설)' },
+      { code:'40-03-12', name:'폐유리(건설)' },
+      { code:'40-04-10', name:'폐타일·폐도자기' },
+    ]},
+    { group: '혼합 건설폐기물', items: [
+      { code:'40-04-11', name:'폐보드류' },
+      { code:'40-04-12', name:'폐판넬' },
+      { code:'40-04-14', name:'혼합건설폐기물' },
+    ]},
+  ],
+  생활폐기물: [
+    { group: '생활폐기물', items: [
+      { code:'91-01-00', name:'종량제봉투 배출폐기물' },
+      { code:'91-02-00', name:'음식물류 폐기물' },
+      { code:'91-04-00', name:'폐지류(종이팩 포함)' },
+      { code:'91-05-00', name:'고철 및 금속캔류' },
+      { code:'91-06-01', name:'폐합성수지(비PVC)' },
+      { code:'91-06-02', name:'폐합성수지(PVC)' },
+      { code:'91-07-01', name:'유리병' },
+      { code:'91-07-02', name:'폐유리' },
+      { code:'91-08-00', name:'폐의류·원단류' },
+      { code:'91-10-01', name:'원목상태 깨끗한 목재' },
+      { code:'91-10-04', name:'폐가구류' },
+      { code:'91-11-00', name:'건설폐재류' },
+      { code:'91-17-01', name:'커피찌꺼기' },
+      { code:'91-17-02', name:'버섯폐배지' },
+    ]},
+  ],
+};
+
+// 선택 상태
+let selectedCats = new Set();
+let selectedItems = new Set(); // "code|name"
+
+// ── 차트 주입 (CHART_DATA 기반) ──
+function injectCharts(cd, data) {
+  if (typeof Chart === 'undefined') {
+    var s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js';
+    s.onload = function() { renderChart(cd, data); };
+    document.head.appendChild(s);
+  } else { renderChart(cd, data); }
+}
+
+function renderChart(cd, data) {
+  var el = document.getElementById('reportContent');
+  if (!el) return;
+  var old = el.querySelector('.chart-inject-wrap');
+  if (old) old.remove();
+
+  var labels = cd.labels || ['현행','10%','20%','30%','50%'];
+  var levyArr = (cd.levy || []).map(Number);
+  var netArr  = (cd.net  || []).map(Number);
+
+  var wrap = document.createElement('div');
+  wrap.className = 'chart-inject-wrap';
+  wrap.setAttribute('style','margin:16px 0;padding:16px;background:#f8fcf9;border:1px solid #d0e8da;border-radius:12px');
+
+  var title = document.createElement('div');
+  title.setAttribute('style','font-size:13px;font-weight:700;color:#1a6b3c;margin-bottom:12px');
+  title.textContent = '📊 처분부담금 절감 시뮬레이션';
+  wrap.appendChild(title);
+
+  var btnRow = document.createElement('div');
+  btnRow.setAttribute('style','display:flex;gap:8px;margin-bottom:12px');
+
+  var btnLevy = document.createElement('button');
+  btnLevy.id = 'btnLevy';
+  btnLevy.setAttribute('style','padding:6px 14px;border-radius:20px;border:1.5px solid #1a6b3c;background:#1a6b3c;color:#fff;font-size:12px;font-weight:700;cursor:pointer');
+  btnLevy.textContent = '처분부담금 비교';
+  btnLevy.onclick = function(){ switchChart('levy'); };
+
+  btnRow.appendChild(btnLevy);
+  wrap.appendChild(btnRow);
+
+  var canvas = document.createElement('canvas');
+  canvas.id = 'mainChart';
+  canvas.height = 220;
+  wrap.appendChild(canvas);
+
+  var hrs = el.querySelectorAll('hr.md-hr');
+  if (hrs.length >= 3) hrs[2].parentNode.insertBefore(wrap, hrs[2]);
+  else el.appendChild(wrap);
+
+  var ctx = canvas.getContext('2d');
+  window._chartInstance = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: '처분부담금 (원)',
+        data: levyArr,
+        backgroundColor: levyArr.map(function(v,i){ return i===0?'rgba(192,57,43,0.75)':'rgba(26,107,60,0.7)'; }),
+        borderRadius: 6,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend:{ display:false }, tooltip:{ callbacks:{ label:function(c){ return c.dataset.label+': '+Number(c.raw).toLocaleString()+'원'; }}}},
+      scales: { y:{ ticks:{ callback:function(v){ return (v/10000).toFixed(0)+'만'; }}}}
+    }
+  });
+  window._chartLabels = labels;
+  window._chartLevy   = levyArr;
+  window._chartNet    = netArr;
+}
+
+function switchChart(type) {}
+
+
+function toggleCat(btn) {
+  const cat = btn.dataset.cat;
+  if (selectedCats.has(cat)) {
+    selectedCats.delete(cat);
+    btn.classList.remove('active');
+  } else {
+    selectedCats.add(cat);
+    btn.classList.add('active');
+  }
+  renderItemList();
+}
+
+function renderItemList() {
+  const list = document.getElementById('wasteItemList');
+  if (selectedCats.size === 0) {
+    document.getElementById('wasteItemSection').style.display = 'none';
+    return;
+  }
+
+  list.innerHTML = '';
+  selectedCats.forEach(cat => {
+    const groups = WASTE_DB[cat] || [];
+    groups.forEach(g => {
+      const gt = document.createElement('div');
+      gt.className = 'witem-group';
+      gt.innerHTML = `<div class="witem-group-title">[${cat}] ${g.group}</div>`;
+      g.items.forEach(item => {
+        const key = `${item.code}|${item.name}`;
+        const chip = document.createElement('span');
+        chip.className = 'witem-chip' + (selectedItems.has(key) ? ' selected' : '');
+        chip.innerHTML = `<span class="chip-code">${item.code}</span>${item.name}`;
+        chip.onclick = () => {
+          if (selectedItems.has(key)) { selectedItems.delete(key); chip.classList.remove('selected'); }
+          else { selectedItems.add(key); chip.classList.add('selected'); }
+          updateHiddenFields();
+          updateSummary();
+          updateVisibility();
+        };
+        gt.appendChild(chip);
+      });
+      list.appendChild(gt);
+    });
+  });
+
+  // 선택 해제된 대분류의 items 제거
+  const allKeys = new Set();
+  selectedCats.forEach(cat => {
+    (WASTE_DB[cat] || []).forEach(g => g.items.forEach(item => allKeys.add(`${item.code}|${item.name}`)));
+  });
+  selectedItems.forEach(k => { if (!allKeys.has(k)) selectedItems.delete(k); });
+
+  updateHiddenFields();
+  updateSummary();
+  updateVisibility();
+}
+
+function updateSummary() {
+  const sum = document.getElementById('wasteItemSummary');
+  if (selectedItems.size === 0) { sum.classList.remove('show'); sum.textContent = ''; return; }
+  const names = [...selectedItems].map(k => k.split('|')[1]);
+  sum.classList.add('show');
+  sum.innerHTML = `<strong>선택된 폐기물 ${selectedItems.size}종:</strong> ${names.join(' · ')}`;
+}
+
+function updateHiddenFields() {
+  const year = parseInt(document.getElementById('dispYear').value) || 2026;
+  const idx  = INDEX[year] || 1.21;
+
+  // wasteType: 대분류
+  document.getElementById('wasteType').value = [...selectedCats].join(', ') || '';
+
+  // wasteDetail: 선택 품목 목록
+  const details = [...selectedItems].map(k => { const p=k.split('|'); return `${p[0]} ${p[1]}`; });
+  document.getElementById('wasteDetail').value = details.join(', ');
+
+  // treatMethod: 품목별 처리방식 요약
+  const treatSummary = [...selectedItems].map(key => {
+    const st = perItemState[key] || {};
+    return st.treat || '';
+  }).filter(Boolean);
+  const uniq = [...new Set(treatSummary)];
+  document.getElementById('treatMethod').value = uniq.join('+') || '';
+
+  // annualKg: 전체 합산
+  let totalKg = 0;
+  selectedItems.forEach(key => { totalKg += parseFloat((perItemState[key]||{}).kg||0); });
+  document.getElementById('annualKg').value = totalKg;
+}
+
+function updateVisibility() {
+  const hasCat  = selectedCats.size > 0;
+  const hasItem = selectedItems.size > 0;
+  // 세부품목 섹션: 대분류 선택 즉시 표시
+  document.getElementById('wasteItemSection').style.display = hasCat ? 'block' : 'none';
+  // 처리방식·처분량 테이블: 품목 1개 이상 선택 즉시 표시
+  document.getElementById('treatSection').style.display = hasItem ? 'block' : 'none';
+  document.getElementById('kgSection').style.display    = hasItem ? 'block' : 'none';
+  if (hasItem) renderPerItemTable();
+}
+
+
+// ════════════════════════════════════════════
+// 우편 발송용 리포트 출력
+// ════════════════════════════════════════════
+function printMailReport() {
+  const data = collectData();
+  if (!data.itemBreakdown || data.itemBreakdown.length === 0) {
+    alert('먼저 폐기물 품목과 처분량을 입력해주세요.');
+    return;
+  }
+
+  const dateStr = new Date().toLocaleDateString('ko-KR', {year:'numeric',month:'long',day:'numeric'});
+
+  // 품목별 업체 카드 생성 (우편용 - 전화번호·주소 포함)
+  function buildItemCards() {
+    return (data.itemBreakdown || []).map(item => {
+      const recInfo = getRecycleInfo(item.code);
+      const coInfo  = getCompanyInfo(item.code);
+      const qrUrl   = `https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=${encodeURIComponent(coInfo.searchUrl||coInfo.qr||'https://www.re.or.kr/info/listTrtmPage.do')}&bgcolor=ffffff&color=1a6b3c&margin=4`;
+      const diffColor = recInfo.diff==='쉬움'?'#1a6b3c':recInfo.diff==='보통'?'#b8962e':'#c0392b';
+
+      const companiesHtml = coInfo.companies.map(c => `
+        <tr>
+          <td style="padding:6px 10px;border-bottom:1px solid #e8f0ea;font-weight:600;color:#111;font-size:11.5px">${c.name}</td>
+          <td style="padding:6px 10px;border-bottom:1px solid #e8f0ea;color:#1a6b3c;font-size:11.5px;font-weight:700">${c.tel}</td>
+          <td style="padding:6px 10px;border-bottom:1px solid #e8f0ea;color:#3a4a40;font-size:11px">${c.addr}</td>
+          <td style="padding:6px 10px;border-bottom:1px solid #e8f0ea;color:#7a9080;font-size:10.5px">${c.note}</td>
+        </tr>`).join('');
+
+      return `
+      <div style="border:1.5px solid #d0e0d8;border-radius:10px;margin:12px 0;overflow:hidden;page-break-inside:avoid">
+        <!-- 품목 헤더 -->
+        <div style="background:linear-gradient(90deg,#f0f7f3,#fff);padding:10px 14px;border-bottom:1px solid #d0e0d8;display:flex;align-items:center;gap:10px">
+          <span style="font-size:10px;color:#7a9080;background:#e8f5ee;border:1px solid #c2e0cd;border-radius:10px;padding:2px 8px">${item.code}</span>
+          <strong style="font-size:14px;color:#111">${item.name}</strong>
+          <span style="margin-left:auto;font-size:11px;font-weight:700;color:${diffColor};background:${diffColor}18;padding:2px 8px;border-radius:8px">전환 ${recInfo.diff}</span>
+        </div>
+        <!-- 현황 + QR -->
+        <div style="display:flex;gap:0;padding:12px 14px">
+          <div style="flex:1">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+              <div style="background:#fff8f8;border-radius:8px;padding:8px 12px">
+                <div style="font-size:10px;color:#7a9080;margin-bottom:3px">현재 처리방식</div>
+                <div style="font-size:12.5px;font-weight:600;color:#c0392b">${item.treat} · ${item.kg.toLocaleString()}kg/년</div>
+                <div style="font-size:11px;color:#c0392b;margin-top:2px">연간 처분부담금 <strong>${item.levy.toLocaleString()}원</strong></div>
+              </div>
+              <div style="background:#f0f7f3;border-radius:8px;padding:8px 12px">
+                <div style="font-size:10px;color:#7a9080;margin-bottom:3px">재활용 전환 시</div>
+                <div style="font-size:12.5px;font-weight:600;color:#1a6b3c">${recInfo.method}</div>
+                <div style="font-size:11px;color:#1a6b3c;margin-top:2px">절감 가능액 <strong>${item.levy.toLocaleString()}원/년</strong></div>
+              </div>
+            </div>
+            <div style="background:#fffbf0;border:1px solid #f0d060;border-radius:8px;padding:8px 12px;font-size:11.5px;color:#7a5a00">
+              💡 <strong>실무 팁:</strong> ${coInfo.tip}
+            </div>
+          </div>
+          <div style="margin-left:14px;text-align:center;flex-shrink:0">
+            <img src="${qrUrl}" alt="QR코드" width="90" height="90" style="border-radius:8px;border:1px solid #d0e0d8">
+            <div style="font-size:9px;color:#7a9080;margin-top:4px;width:90px">업체 더 보기<br>re.or.kr</div>
+          </div>
+        </div>
+        <!-- 업체 테이블 -->
+        <div style="padding:0 14px 12px">
+          <div style="font-size:11px;font-weight:700;color:#1a6b3c;margin-bottom:6px">🏢 연락 가능한 재활용 업체</div>
+          <table style="width:100%;border-collapse:collapse;border:1px solid #d0e0d8;border-radius:8px;overflow:hidden;font-size:11px">
+            <thead>
+              <tr style="background:#1a6b3c;color:#fff">
+                <th style="padding:6px 10px;text-align:left;font-weight:600">업체명</th>
+                <th style="padding:6px 10px;text-align:left;font-weight:600">전화번호</th>
+                <th style="padding:6px 10px;text-align:left;font-weight:600">소재지</th>
+                <th style="padding:6px 10px;text-align:left;font-weight:600">비고</th>
+              </tr>
+            </thead>
+            <tbody>${companiesHtml}</tbody>
+          </table>
+          <div style="margin-top:6px;font-size:10px;color:#7a9080">
+            ※ 더 많은 업체: <strong>re.or.kr → 재활용 처리업체 찾기</strong> (위 QR코드 참조)
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // 감면 요약
+  const exSummary = data.exemptions.length > 0
+    ? data.exemptions.map(e =>
+        `<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#f0f7f3;border-radius:8px;margin-bottom:6px">
+          <span style="font-weight:700;color:#1a6b3c;font-size:13px">${e.num} ${e.title}</span>
+          <span style="margin-left:auto;font-weight:700;color:#1a6b3c;font-size:13px">${e.rate} 감면</span>
+          <span style="font-size:11px;color:#7a9080">예상 ${Math.round(data.levy*parseInt(e.rate)/100).toLocaleString()}원 절감</span>
+        </div>`
+      ).join('')
+    : `<div style="padding:10px 14px;background:#f8f9fa;border-radius:8px;font-size:12px;color:#7a9080">
+        감면 항목 미선택 — ② 소각열에너지회수(최대75%) 또는 ④ 중소기업 감면(50~100%) 신청 검토 권장
+       </div>`;
+
+  // 절감 시나리오 간략 표
+  const r30 = Math.round(data.levy*0.30);
+  const r50 = Math.round(data.levy*0.50);
+
+  const mailHtml = `<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>폐기물처분부담금 컨설팅 리포트 — ${data.company}</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;font-size:13px;color:#111;background:#fff;padding:0}
+@media print{
+  body{padding:0}
+  .no-print{display:none!important}
+  .page-break{page-break-before:always}
+  @page{margin:12mm 15mm;size:A4}
+  table{page-break-inside:avoid}
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"><\/script>
+</head>
+<body>
+
+<!-- 인쇄 툴바 (화면에서만 표시) -->
+<div class="no-print" style="position:fixed;top:0;left:0;right:0;z-index:999;background:#1a6b3c;color:#fff;padding:10px 20px;display:flex;align-items:center;gap:12px">
+  <div style="flex:1;font-size:14px;font-weight:700">📬 우편 발송용 리포트 — ${data.company}</div>
+  <button onclick="window.print()" style="background:#fff;color:#1a6b3c;border:none;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:700;cursor:pointer">🖨️ 인쇄 · PDF 저장</button>
+  <button onclick="window.close()" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:8px;padding:8px 16px;font-size:13px;cursor:pointer">✕ 닫기</button>
+</div>
+
+<div style="max-width:800px;margin:56px auto 40px;padding:0 16px" class="no-print-margin">
+<div style="margin-top:0" class="no-print" ></div>
+
+<!-- 페이지 1: 표지 -->
+<div style="padding:40px;background:linear-gradient(135deg,#0f3d22,#1a6b3c);color:#fff;border-radius:14px;margin-bottom:20px;position:relative;overflow:hidden">
+  <div style="position:absolute;right:30px;top:50%;transform:translateY(-50%);font-size:120px;opacity:0.06">♻</div>
+  <div style="font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.6);margin-bottom:10px;text-transform:uppercase">폐기물처분부담금 감면 & 재활용 전환 컨설팅</div>
+  <div style="font-family:'Noto Serif KR',serif;font-size:26px;font-weight:700;margin-bottom:8px;line-height:1.3">${data.company}</div>
+  <div style="font-size:13px;color:rgba(255,255,255,0.8);margin-bottom:20px">${data.industry || '폐기물 처분 기업'} · ${data.dispYear}년 처분 기준</div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap">
+    <div style="background:rgba(255,255,255,0.12);border-radius:8px;padding:10px 16px;text-align:center">
+      <div style="font-size:10px;color:rgba(255,255,255,0.6);margin-bottom:4px">연간 처분량</div>
+      <div style="font-size:18px;font-weight:700">${data.annualKg.toLocaleString()} kg</div>
+    </div>
+    <div style="background:rgba(255,255,255,0.12);border-radius:8px;padding:10px 16px;text-align:center">
+      <div style="font-size:10px;color:rgba(255,255,255,0.6);margin-bottom:4px">예상 처분부담금</div>
+      <div style="font-size:18px;font-weight:700;color:#f0d060">${data.levy.toLocaleString()}원/년</div>
+    </div>
+    <div style="background:rgba(255,255,255,0.12);border-radius:8px;padding:10px 16px;text-align:center">
+      <div style="font-size:10px;color:rgba(255,255,255,0.6);margin-bottom:4px">30% 전환 시 절감</div>
+      <div style="font-size:18px;font-weight:700;color:#a8e6c0">${r30.toLocaleString()}원/년</div>
+    </div>
+    <div style="background:rgba(255,255,255,0.12);border-radius:8px;padding:10px 16px;text-align:center">
+      <div style="font-size:10px;color:rgba(255,255,255,0.6);margin-bottom:4px">발급일</div>
+      <div style="font-size:15px;font-weight:600">${dateStr}</div>
+    </div>
+  </div>
+</div>
+
+<!-- 안내문 -->
+<div style="padding:16px 20px;background:#fffbf0;border:1.5px solid #f0d060;border-radius:10px;margin-bottom:20px;font-size:12.5px;line-height:1.8;color:#5a4000">
+  <strong>📌 이 리포트의 활용 방법</strong><br>
+  귀사에서 처분하고 있는 폐기물 <strong>${data.itemBreakdown.length}개 품목</strong>에 대해 재활용 전환 방법과 실제 연락 가능한 업체 정보를 정리했습니다.<br>
+  각 품목별 업체에 직접 연락하여 수거 가능 여부와 단가를 확인하시면 됩니다. QR코드를 스캔하면 더 많은 업체를 검색하실 수 있습니다.
+</div>
+
+<!-- 섹션 1: 감면 신청 -->
+<div style="margin-bottom:20px">
+  <div style="font-family:'Noto Serif KR',serif;font-size:16px;font-weight:700;color:#1a6b3c;padding:8px 14px;background:#f0f7f3;border-left:4px solid #1a6b3c;border-radius:0 8px 8px 0;margin-bottom:12px">
+    💰 처분부담금 감면 신청 안내
+  </div>
+  ${exSummary}
+  <div style="margin-top:10px;padding:10px 14px;background:#e8f5ee;border-radius:8px;font-size:11.5px;color:#1a4a2a">
+    📱 신청 방법: <strong>budamgum.or.kr</strong> 접속 → 회원가입 → 정기신고 → 감면 신청<br>
+    📞 문의: 한국환경공단 광주전남제주환경본부 제도운영부 <strong>☎ 062-949-0305</strong> / 📧 wds.budamgum.or.kr (신고·감면)
+  </div>
+</div>
+
+<!-- 섹션 2: 절감 요약 -->
+<div style="margin-bottom:20px">
+  <div style="font-family:'Noto Serif KR',serif;font-size:16px;font-weight:700;color:#1a6b3c;padding:8px 14px;background:#f0f7f3;border-left:4px solid #1a6b3c;border-radius:0 8px 8px 0;margin-bottom:12px">
+    📊 재활용 전환 시 절감 효과
+  </div>
+  <table style="width:100%;border-collapse:collapse;border:1px solid #d0e0d8;border-radius:10px;overflow:hidden">
+    <thead>
+      <tr style="background:#1a6b3c;color:#fff">
+        <th style="padding:10px 14px;text-align:left;font-size:12px">실행 수준</th>
+        <th style="padding:10px 14px;text-align:right;font-size:12px">처분부담금 절감</th>
+        <th style="padding:10px 14px;text-align:center;font-size:12px">권장 여부</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#fdf0ee"><td style="padding:8px 14px;font-size:12px">🔴 현행 유지</td><td style="padding:8px 14px;text-align:right;font-size:12px">0원</td><td style="padding:8px 14px;text-align:center;font-size:11px">—</td></tr>
+      <tr><td style="padding:8px 14px;font-size:12px">🟠 10% 전환 (일부 품목)</td><td style="padding:8px 14px;text-align:right;font-size:12px;font-weight:600">${Math.round(data.levy*0.10).toLocaleString()}원/년</td><td style="padding:8px 14px;text-align:center;font-size:11px;color:#1a6b3c">쉬운 품목 즉시 가능</td></tr>
+      <tr style="background:#f0f7f3"><td style="padding:8px 14px;font-size:12px">🟢 30% 전환 (주요 품목)</td><td style="padding:8px 14px;text-align:right;font-size:13px;font-weight:700;color:#1a6b3c">${r30.toLocaleString()}원/년</td><td style="padding:8px 14px;text-align:center;font-size:11px;color:#1a6b3c;font-weight:700">✅ 권장 목표</td></tr>
+      <tr><td style="padding:8px 14px;font-size:12px">💚 50% 전환 (대부분 품목)</td><td style="padding:8px 14px;text-align:right;font-size:12px;font-weight:600">${r50.toLocaleString()}원/년</td><td style="padding:8px 14px;text-align:center;font-size:11px;color:#7a9080">중장기 목표</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 페이지 구분 -->
+<div class="page-break"></div>
+
+<!-- 섹션 3: 품목별 재활용 방법 및 업체 안내 (핵심) -->
+<div>
+  <div style="font-family:'Noto Serif KR',serif;font-size:16px;font-weight:700;color:#1a6b3c;padding:8px 14px;background:#f0f7f3;border-left:4px solid #1a6b3c;border-radius:0 8px 8px 0;margin-bottom:6px">
+    ♻️ 폐기물별 재활용 방법 및 연락처
+  </div>
+  <div style="font-size:11px;color:#7a9080;margin-bottom:12px;padding-left:4px">
+    ※ QR코드 스캔 시 순환자원정보센터(☎ 1800-8830 / re.or.kr)에서 더 많은 업체를 검색하실 수 있습니다
+  </div>
+  ${buildItemCards()}
+</div>
+
+<!-- 하단 -->
+<div style="margin-top:24px;padding:16px 20px;background:#f4f7f5;border-radius:10px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#7a9080">
+  <div>순환경제사회 전환 촉진법 시행령 별표4·5 기준 · 산정지수 ${data.idx}</div>
+  <div style="text-align:right">
+    한국환경공단 광주전남제주환경본부 제도운영부<br>
+    <strong style="color:#1a6b3c">☎ 062-949-0305 · wds.budamgum.or.kr (신고·감면)</strong>
+  </div>
+</div>
+
+</div>
+</body>
+</html>`;
+
+  const blob = new Blob([mailHtml], {type:'text/html;charset=utf-8'});
+  const url  = URL.createObjectURL(blob);
+  const win  = window.open(url, '_blank');
+  if (!win) {
+    const a = document.createElement('a');
+    a.href = url; a.download = `우편리포트_${data.company}_${data.dispYear}.html`;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  }
+  setTimeout(() => URL.revokeObjectURL(url), 15000);
+}
+function savePdf() {
+  const reportEl = document.getElementById('reportContent');
+  if (!reportEl || !reportEl.innerHTML.trim()) {
+    alert('먼저 리포트를 생성해주세요'); return;
+  }
+  const data = collectData();
+  const filename = 'ESG리포트_' + data.company + '_' + data.dispYear + '.pdf';
+
+  // 저장 중 토스트
+  const toast = document.getElementById('toast');
+  if (toast) { toast.textContent='📥 PDF 저장 중...'; toast.classList.add('show'); }
+
+  const opt = {
+    margin:       [10, 10, 10, 10],
+    filename:     filename,
+    image:        { type:'jpeg', quality:0.95 },
+    html2canvas:  { scale:2, useCORS:true, logging:false },
+    jsPDF:        { unit:'mm', format:'a4', orientation:'portrait' },
+    pagebreak:    { mode:['avoid-all','css','legacy'] }
+  };
+
+  // 인쇄 제외 요소 숨기기
+  const noPrintEls = document.querySelectorAll('.no-print');
+  noPrintEls.forEach(function(el){ el.style.display='none'; });
+
+  html2pdf().set(opt).from(reportEl).save().then(function() {
+    noPrintEls.forEach(function(el){ el.style.display=''; });
+    if (toast) { toast.textContent='✅ PDF 저장 완료'; setTimeout(function(){ toast.classList.remove('show'); }, 2500); }
+  }).catch(function(err) {
+    noPrintEls.forEach(function(el){ el.style.display=''; });
+    if (toast) { toast.classList.remove('show'); }
+    alert('PDF 저장 실패: ' + err.message);
+  });
+}
+
+
+function printReport() {
+  const reportEl = document.getElementById('reportContent');
+  if (!reportEl || !reportEl.innerHTML.trim()) {
+    alert('먼저 리포트를 생성해주세요'); return;
+  }
+  const data = collectData();
+  const title = `ESG리포트_${data.company}_${data.dispYear}`;
+
+  // 인쇄용 새 창 열기
+  const win = window.open('', '_blank', 'width=900,height=700');
+  if (!win) {
+    // 팝업 차단된 경우 → 현재 창에서 직접 print
+    const old = document.title;
+    document.title = title;
+    window.print();
+    document.title = old;
+    return;
+  }
+  win.document.write(`<!DOCTYPE html><html lang="ko"><head>
+<meta charset="UTF-8">
+<title>${title}</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{font-family:'Noto Sans KR',sans-serif;padding:20px 28px;font-size:13px;color:#111;line-height:1.7;max-width:900px;margin:0 auto}
+@page{margin:12mm;size:A4}
+@media print{.no-print{display:none!important}body{padding:0}}
+.rh2{font-size:15px;font-weight:700;color:#1a6b3c;border-left:4px solid #1a6b3c;padding:5px 10px;background:#f0f7f3;margin:18px 0 8px;border-radius:0 6px 6px 0;page-break-after:avoid}
+.rh3{font-size:13px;font-weight:700;color:#3a4a40;border-bottom:1px solid #d0e0d8;padding-bottom:3px;margin:12px 0 5px;page-break-after:avoid}
+.md-p{margin:4px 0}.md-ul,.md-ol{padding-left:18px;margin:4px 0}.md-ul li,.md-ol li{margin-bottom:2px}
+.md-table-wrap{overflow-x:auto;margin:8px 0;page-break-inside:avoid}
+.md-table{width:100%;border-collapse:collapse;font-size:11.5px}
+.md-table th{background:#1a6b3c;color:#fff;padding:6px 10px;text-align:left;font-weight:600}
+.md-table td{padding:5px 10px;border-bottom:1px solid #e8f0ea}
+.md-table tr:nth-child(even) td{background:#f8fcf9}
+.md-hr{border:none;border-top:1px solid #d0e0d8;margin:10px 0}
+.md-bq{border-left:3px solid #1a6b3c;background:#f0f7f3;padding:6px 10px;margin:6px 0;border-radius:0 6px 6px 0;font-size:12px;color:#2a4a35}
+.chart-inject-wrap{page-break-inside:avoid}
+div[style*="border:1.5px solid #c8ddd4"]{page-break-inside:avoid;margin-bottom:12px}
+</style><script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"><\/script>
+</head><body>
+<div style="margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid #1a6b3c;display:flex;justify-content:space-between;align-items:flex-end">
+  <div>
+    <div style="font-size:10px;color:#7a9080;margin-bottom:2px">폐기물처분부담금 재활용 전환을 위한 에코 코디네이터 · ${new Date().toLocaleDateString('ko-KR')}</div>
+    <div style="font-size:17px;font-weight:700;color:#1a6b3c">${data.company}</div>
+  </div>
+  <button class="no-print" onclick="window.print()" style="background:#1a6b3c;color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:700;cursor:pointer;margin-right:8px">🖨️ 인쇄</button>
+</div>
+${reportEl.innerHTML}
+</body></html>`);
+  win.document.close();
+  // 폰트 로딩 후 자동 인쇄
+  win.onload = function() {
+    setTimeout(function() { win.focus(); }, 300);
+  };
+}
+
+function copyReport() {
+  const el = document.getElementById('reportContent');
+  const text = el ? el.innerText : '';
+  navigator.clipboard.writeText(text).then(() => {
+    const toast = document.getElementById('toast');
+    if (toast) { toast.textContent='📋 리포트가 클립보드에 복사됐습니다'; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),2500); }
+  }).catch(()=>{ alert('복사 실패 — 직접 텍스트를 선택해 복사해주세요'); });
+}
+
+// 초기화
+window.addEventListener("DOMContentLoaded", init);
+</script>
+</body>
+</html>
